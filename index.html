@@ -3,321 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LUNO TECH | Zen Collection</title>
+    <title>LUNO TECH | HYPE EDITION</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* --- 1. ZEN THEME VARIABLES --- */
+        /* --- 1. NEO-BRUTALISM VARIABLES --- */
         :root {
-            --bg-color: #F9F8F6;
-            --text-dark: #2D3436;
-            --accent-sage: #8DA399;
-            --accent-clay: #C08552;
+            --bg-color: #f3f4f6;
+            --accent-green: #CCFF00;
+            --accent-pink: #FF00FF;
+            --accent-blue: #3b82f6;
+            --border-width: 3px;
+            --shadow-hard: 4px 4px 0px 0px #000000;
         }
 
         body {
-            font-family: 'Lato', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-dark);
+            color: #000;
             overflow-x: hidden;
+            background-image: radial-gradient(#000 1px, transparent 1px);
+            background-size: 20px 20px;
             -webkit-tap-highlight-color: transparent;
         }
 
-        h1, h2, h3, .serif-font { font-family: 'Playfair Display', serif; }
-
-        /* --- 2. OPTIMIZED BACKGROUND (Static on Mobile to prevent crash) --- */
-        .organic-blob {
-            position: absolute;
-            background: linear-gradient(135deg, #E8E6E1 0%, #F0EFE9 100%);
-            border-radius: 50%;
-            z-index: -1;
+        /* --- 2. BRUTALIST COMPONENTS --- */
+        .brutal-btn {
+            background: #000; color: #fff;
+            border: var(--border-width) solid #000;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: var(--shadow-hard); transition: all 0.1s ease;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        
-        /* Desktop Animation */
-        @media (min-width: 768px) {
-            .blob-1 { top: -10%; left: -5%; width: 600px; height: 600px; opacity: 0.6; animation: breathe 10s infinite alternate; }
-            .blob-2 { top: 40%; right: -10%; width: 400px; height: 400px; opacity: 0.5; animation: breathe 10s infinite alternate-reverse; }
-            
-            @keyframes breathe {
-                0% { transform: scale(1) rotate(0deg); }
-                100% { transform: scale(1.05) rotate(5deg); }
-            }
-        }
+        .brutal-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px 0px #000; }
 
-        /* Mobile Static (Safe Mode) */
-        @media (max-width: 767px) {
-            .blob-1 { top: 0; left: 0; width: 300px; height: 300px; opacity: 0.4; }
-            .blob-2 { bottom: 0; right: 0; width: 250px; height: 250px; opacity: 0.4; }
-        }
-
-        /* --- 3. HONEY CART (ZEN) --- */
-        .honey-cart-zen {
-            position: relative;
-            width: 44px; height: 44px;
-            background: linear-gradient(135deg, #8DA399, #6B8E80);
-            border-radius: 14px;
+        /* --- 3. HONEY CART (BRUTALIST) --- */
+        .honey-cart-brutal {
+            position: relative; width: 44px; height: 44px;
+            background: var(--accent-blue);
+            border: var(--border-width) solid #000;
+            border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(107, 142, 128, 0.3);
-            transition: transform 0.2s;
+            box-shadow: var(--shadow-hard);
+            transition: transform 0.1s, box-shadow 0.1s;
             cursor: pointer; color: white;
-            border: 1px solid rgba(255,255,255,0.2);
         }
-        .honey-cart-zen:active { transform: scale(0.95); }
+        .honey-cart-brutal:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px 0px #000; }
 
         .cart-badge {
-            position: absolute; top: -5px; right: -5px;
-            background-color: var(--accent-clay); color: white;
-            font-size: 10px; font-weight: 700; height: 18px; width: 18px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            position: absolute; top: -8px; right: -8px;
+            background-color: var(--accent-pink); color: white;
+            font-size: 11px; font-weight: 800; height: 20px; width: 20px;
+            border: 2px solid #000; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             opacity: 0; transform: scale(0);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid #fff; z-index: 10;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
         }
         .cart-badge.visible { opacity: 1; transform: scale(1); }
-        
-        .cart-pulse { animation: softPop 0.4s ease-in-out; }
-        @keyframes softPop { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .cart-pulse { animation: brutalPop 0.3s ease-in-out; }
+        @keyframes brutalPop { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
         /* --- 4. PRODUCT CARDS --- */
         .product-card {
-            background: #FFFFFF;
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.02);
+            background: white;
+            border: var(--border-width) solid #000;
+            box-shadow: 6px 6px 0px #000;
+            padding: 1.25rem;
+            position: relative; transition: transform 0.2s;
             display: flex; flex-direction: column; justify-content: space-between;
         }
-        
-        .product-image-container {
-            height: 220px;
-            display: flex; align-items: center; justify-content: center;
-            position: relative; z-index: 10;
-            margin-bottom: 1rem;
-            background: radial-gradient(circle, #F2F0EB 0%, transparent 70%);
-        }
-        
-        @media (min-width: 768px) { .product-image-container { height: 280px; } }
-        
-        .product-img {
-            max-height: 90%; max-width: 90%; object-fit: contain;
-            transition: transform 0.3s;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-        }
+        .product-card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px #000; }
 
-        /* Controls */
+        .product-image-container {
+            /* Responsive Height Logic */
+            height: 240px; /* Bigger on mobile for "Clean Zen" look */
+            background: #eee;
+            border-bottom: var(--border-width) solid #000;
+            margin: -1.25rem -1.25rem 1rem -1.25rem;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        
+        @media (min-width: 768px) { .product-image-container { height: 260px; } }
+
+        .product-img {
+            max-height: 85%; max-width: 85%; object-fit: contain;
+            filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.1));
+            transition: transform 0.2s;
+        }
+        .product-card:hover .product-img { transform: scale(1.05) rotate(-2deg); }
+
+        /* Slideshow Buttons */
         .slide-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
-            background: white; color: var(--text-dark);
+            background: white; border: 2px solid #000; color: #000;
             width: 36px; height: 36px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 20; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 1px solid #eee;
+            cursor: pointer; z-index: 20; box-shadow: 2px 2px 0px #000;
+            transition: all 0.1s;
         }
-        .prev-btn { left: 0px; } .next-btn { right: 0px; }
+        .slide-btn:active { transform: translateY(-50%) translate(2px, 2px); box-shadow: 0 0 0 #000; }
+        .prev-btn { left: 10px; } .next-btn { right: 10px; }
 
-        /* --- 5. BUTTONS --- */
-        .btn-zen {
-            background: var(--text-dark); color: #fff;
-            padding: 12px 24px; border-radius: 30px; font-size: 14px;
-            font-weight: 400; transition: background 0.3s;
-            width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .btn-zen:active { background: var(--accent-sage); }
-
-        /* --- 6. CART DRAWER --- */
+        /* --- 5. CART DRAWER --- */
         #cart-drawer { 
-            background: #fff; 
-            box-shadow: -10px 0 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease-in-out;
-            will-change: transform; 
+            background: #fff; border-left: var(--border-width) solid #000;
+            transition: transform 0.3s ease;
         }
         .cart-open { transform: translateX(0%); }
         .cart-closed { transform: translateX(100%); }
-        
-        .qty-btn {
-            width: 28px; height: 28px; border-radius: 50%;
-            background: #F0EFE9; color: var(--text-dark);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; cursor: pointer;
-        }
 
-        /* --- 7. HONEY FOOTER --- */
+        .qty-btn {
+            width: 28px; height: 28px; 
+            background: white; border: 2px solid #000; color: #000;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; cursor: pointer; box-shadow: 2px 2px 0px #000;
+        }
+        .qty-btn:active { box-shadow: 0 0 0 #000; transform: translate(2px, 2px); }
+
+        /* --- 6. HONEY FOOTER --- */
         .wc-brand-footer {
             width: 100%; display: flex; justify-content: center; align-items: center;
-            padding: 30px 0; opacity: 0.6; margin-top: auto;
+            padding: 30px 0; margin-top: auto;
+            border-top: var(--border-width) solid #000; background: #fff;
         }
         .wc-brand-link { display: flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; }
-        .wc-brand-text { font-family: 'Lato', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-soft); font-weight: 700; }
+        .wc-brand-text { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #000; font-weight: 900; }
         .wc-brand-icon {
-            width: 24px; height: 24px; background: linear-gradient(135deg, #22c55e, #15803d);
-            border-radius: 6px; display: flex; align-items: center; justify-content: center;
-            color: #fff; font-size: 10px; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2);
+            width: 24px; height: 24px; background: #22c55e;
+            border: 2px solid #000; border-radius: 6px; 
+            display: flex; align-items: center; justify-content: center;
+            color: #000; font-size: 12px; box-shadow: 2px 2px 0px #000;
         }
 
-        /* --- 8. FEATHER TOAST NOTIFICATION --- */
+        /* --- 7. FEATHER TOAST --- */
         #toast {
-            position: fixed; top: 90px; left: 50%; transform: translateX(-50%) translateY(-50px);
-            background: #fff; color: var(--text-dark);
-            padding: 12px 24px; border-radius: 30px; font-family: 'Lato', sans-serif; font-weight: 700;
-            z-index: 3000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+            position: fixed; top: 100px; left: 50%; transform: translateX(-50%) translateY(-50px);
+            background: var(--accent-green); border: 3px solid #000; color: #000;
+            padding: 12px 30px; font-weight: 800; text-transform: uppercase;
+            box-shadow: 6px 6px 0px #000; z-index: 3000;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
             opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid #f0f0f0; width: max-content;
+            width: max-content;
         }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        
-        /* Feather animation */
-        .feather-icon {
-            color: var(--accent-sage);
-            font-size: 18px;
-            animation: floatFeather 2s infinite ease-in-out;
-        }
-        @keyframes floatFeather {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-3px) rotate(10deg); }
-        }
+        .feather-icon { font-size: 18px; }
 
-        /* RESPONSIVE LAYOUT */
+        /* --- 8. RESPONSIVE GRID LOGIC --- */
         @media (max-width: 768px) {
             .mobile-hide { display: none; }
             .mobile-show { display: block; }
-            #hero h1 { font-size: 3rem; line-height: 1.1; }
+            #hero h1 { font-size: 3.5rem; line-height: 0.9; }
             
-            /* STABLE MOBILE GRID (1 Column) */
+            /* Clean Single Column Grid for Mobile */
             .responsive-grid { 
                 grid-template-columns: 1fr !important;
-                gap: 24px !important; 
+                gap: 2.5rem !important; /* Proper spacing like Zen theme */
             }
-            .product-card { padding: 1.25rem; }
-            .slide-btn { width: 40px; height: 40px; background: #fff; opacity: 1; }
+            .product-card { padding: 1.5rem; }
         }
-        
         @media (min-width: 769px) {
             .mobile-show { display: none; }
             .mobile-hide { display: flex; }
-            .responsive-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 32px; }
-            .product-card:hover { transform: translateY(-8px); }
-            .slide-btn { opacity: 0; }
-            .product-card:hover .slide-btn { opacity: 1; }
+            .responsive-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 2.5rem; }
         }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 
     <div id="toast">
-        <i class="fas fa-feather-alt feather-icon"></i> 
-        <span>Added to collection</span>
+        <i class="fas fa-feather-alt feather-icon"></i>
+        <span>Added to Stash</span>
     </div>
 
-    <div class="organic-blob blob-1"></div>
-    <div class="organic-blob blob-2"></div>
+    <nav class="fixed top-0 w-full z-50 bg-white border-b-[3px] border-black">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
+            <button class="text-3xl mobile-show" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
 
-    <nav class="fixed top-0 w-full z-50 bg-[#F9F8F6]/95 backdrop-blur-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <button class="text-gray-800 text-2xl md:hidden mobile-show p-2" onclick="toggleMobileMenu()">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <div class="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-3 cursor-pointer serif-font text-gray-800" onclick="window.scrollTo(0,0)">
-                <span class="w-2 h-2 rounded-full bg-[var(--accent-sage)]"></span>
-                LUNO TECH
-            </div>
-
-            <div class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-500 mobile-hide uppercase tracking-widest">
-                <a href="#hero" class="hover:text-[var(--accent-sage)] transition">Home</a>
-                <a href="#products" class="hover:text-[var(--accent-sage)] transition">Shop</a>
-                <a href="#" class="hover:text-[var(--accent-sage)] transition">About</a>
-            </div>
-
-            <div class="relative cursor-pointer group" onclick="toggleCart()">
-                <div class="honey-cart-zen" id="cart-btn">
-                    <i class="fas fa-shopping-cart text-lg"></i>
-                    <div id="cart-badge" class="cart-badge">0</div>
+            <div class="text-3xl font-black tracking-tighter flex items-center gap-2 cursor-pointer select-none" onclick="window.scrollTo(0,0)">
+                <div class="w-10 h-10 bg-black text-white flex items-center justify-center font-bold border-2 border-transparent">
+                    <i class="fas fa-bolt"></i>
                 </div>
+                <span>LUNO<span class="text-blue-600">TECH</span></span>
             </div>
+
+            <div class="hidden md:flex items-center gap-8 font-bold uppercase tracking-wide mobile-hide">
+                <a href="#hero" class="hover:text-blue-600 hover:underline decoration-2 underline-offset-4">Home</a>
+                <a href="#products" class="hover:text-blue-600 hover:underline decoration-2 underline-offset-4">Shop</a>
+                <a href="#" class="hover:text-blue-600 hover:underline decoration-2 underline-offset-4">Drops</a>
+            </div>
+
+            <button onclick="toggleCart()" class="honey-cart-brutal" id="cart-btn">
+                <i class="fas fa-shopping-cart text-xl"></i>
+                <div id="cart-badge" class="cart-badge">0</div>
+            </button>
         </div>
     </nav>
 
-    <div id="mobileNav" class="fixed top-0 left-[-100%] w-full h-full bg-[#F9F8F6] z-[2000] flex flex-col items-center justify-center gap-10 transition-all duration-300">
-        <button class="absolute top-6 right-6 text-gray-800 text-3xl p-4" onclick="toggleMobileMenu()">&times;</button>
-        <a href="#hero" class="text-3xl serif-font text-gray-800" onclick="toggleMobileMenu()">Home</a>
-        <a href="#products" class="text-3xl serif-font text-gray-800" onclick="toggleMobileMenu()">Shop</a>
-        <a href="#" class="text-3xl serif-font text-gray-800" onclick="toggleMobileMenu()">About</a>
+    <div id="mobileNav" class="fixed top-0 left-[-100%] w-full h-full bg-white z-[2000] flex flex-col items-center justify-center gap-8 transition-all duration-200 border-r-[3px] border-black">
+        <button class="absolute top-6 right-6 text-4xl" onclick="toggleMobileMenu()">&times;</button>
+        <a href="#hero" class="text-4xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Home</a>
+        <a href="#products" class="text-4xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Shop</a>
+        <a href="#" class="text-4xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Drops</a>
     </div>
 
-    <section id="hero" class="pt-32 pb-12 px-6 max-w-7xl mx-auto text-center flex-grow flex flex-col justify-center items-center min-h-[50vh]">
-        <span class="text-[var(--accent-sage)] text-xs uppercase tracking-[0.2em] mb-4 font-bold">
-            Mindful Technology
-        </span>
-        <h1 class="text-5xl md:text-7xl font-medium text-gray-900 mb-6 leading-tight">
-            Design for <br> <i class="serif-font italic text-[var(--accent-clay)]">Wellbeing</i>
+    <section id="hero" class="pt-32 pb-12 px-4 max-w-7xl mx-auto text-center flex-grow flex flex-col justify-center items-center min-h-[50vh]">
+        <div class="inline-block bg-[var(--accent-green)] border-2 border-black px-4 py-1 font-bold text-xs mb-6 shadow-[4px_4px_0px_0px_#000]">
+            NEW COLLECTION 2026
+        </div>
+        <h1 class="text-5xl md:text-8xl font-black tracking-tight mb-6 leading-none uppercase">
+            WEAR THE <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600" style="-webkit-text-stroke: 2px black; color: transparent;">FUTURE</span>
         </h1>
-        <p class="text-gray-500 max-w-lg mx-auto text-lg mb-12 font-light leading-relaxed">
-            Curated gadgets that blend seamlessly into your life.
+        <p class="text-gray-600 max-w-xl mx-auto text-sm md:text-lg font-bold mb-12 border-l-4 border-black pl-4 text-left md:text-center md:border-l-0 md:pl-0">
+            High-performance gear. No compromises. <br class="hidden md:block"> Designed for the next generation of creators.
         </p>
 
-        <div id="products" class="grid w-full responsive-grid pb-20">
+        <div id="products" class="grid w-full responsive-grid pb-10">
             
-            <div class="product-card group text-center md:text-left">
+            <div class="product-card group">
                 <div class="product-image-container">
                     <button class="slide-btn prev-btn" onclick="changeSlide(1, -1)"><i class="fas fa-chevron-left"></i></button>
-                    <img id="img-1" src="images/app1 (1).png" alt="Luno Tech" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=LUNO'">
+                    <img id="img-1" src="images/app1 (1).png" alt="Luno Tech" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/000/fff?text=LUNO'">
                     <button class="slide-btn next-btn" onclick="changeSlide(1, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-2">
-                    <p class="text-xs text-[var(--accent-sage)] font-bold uppercase tracking-widest mb-2">Concept</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">Luno Tech V1</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Organic interface design.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
-                        <span class="text-lg font-medium text-gray-800">$4,500</span>
-                        <button onclick="addToCart(1)" class="btn-zen w-full md:w-auto">
-                            Add to Bag
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg md:text-xl font-black leading-tight uppercase">Luno Tech V1</h3>
+                        <span class="bg-black text-white px-2 py-1 text-xs font-bold">CONCEPT</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-500 h-8 leading-snug">Wearable holographic interface.</p>
+                    <div class="flex items-center justify-between mt-2 pt-3 border-t-2 border-black border-dashed">
+                        <span class="text-xl font-bold">$4,500</span>
+                        <button onclick="addToCart(1)" class="brutal-btn px-4 py-2 text-sm">
+                            Add <i class="fas fa-plus"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="product-card group text-center md:text-left">
+            <div class="product-card group">
                 <div class="product-image-container">
                     <button class="slide-btn prev-btn" onclick="changeSlide(2, -1)"><i class="fas fa-chevron-left"></i></button>
-                    <img id="img-2" src="images/i17.png" alt="iPhone" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=PHONE'">
+                    <img id="img-2" src="images/i17.png" alt="iPhone" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/000/fff?text=iPHONE'">
                     <button class="slide-btn next-btn" onclick="changeSlide(2, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-2">
-                    <p class="text-xs text-[var(--accent-clay)] font-bold uppercase tracking-widest mb-2">Mobile</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">iPhone 17 Pro</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Natural titanium finish.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
-                        <span class="text-lg font-medium text-gray-800">$1,199</span>
-                        <button onclick="addToCart(2)" class="btn-zen w-full md:w-auto">
-                            Add to Bag
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg md:text-xl font-black leading-tight uppercase">iPhone 17 Pro</h3>
+                        <span class="bg-purple-600 text-white px-2 py-1 text-xs font-bold">MOBILE</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-500 h-8 leading-snug">Titanium finish, A19 Bionic.</p>
+                    <div class="flex items-center justify-between mt-2 pt-3 border-t-2 border-black border-dashed">
+                        <span class="text-xl font-bold">$1,199</span>
+                        <button onclick="addToCart(2)" class="brutal-btn px-4 py-2 text-sm">
+                            Add <i class="fas fa-plus"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="product-card group text-center md:text-left">
+            <div class="product-card group">
                 <div class="product-image-container">
                     <button class="slide-btn prev-btn" onclick="changeSlide(3, -1)"><i class="fas fa-chevron-left"></i></button>
-                    <img id="img-3" src="images/ap1.png" alt="AirPods" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=AUDIO'">
+                    <img id="img-3" src="images/ap1.png" alt="AirPods" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/000/fff?text=AUDIO'">
                     <button class="slide-btn next-btn" onclick="changeSlide(3, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-2">
-                    <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">Audio</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">AirPods Max 2</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Immersive soundscapes.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
-                        <span class="text-lg font-medium text-gray-800">$549</span>
-                        <button onclick="addToCart(3)" class="btn-zen w-full md:w-auto">
-                            Add to Bag
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg md:text-xl font-black leading-tight uppercase">AirPods Max 2</h3>
+                        <span class="bg-green-600 text-white px-2 py-1 text-xs font-bold">AUDIO</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-500 h-8 leading-snug">High-fidelity USB-C audio.</p>
+                    <div class="flex items-center justify-between mt-2 pt-3 border-t-2 border-black border-dashed">
+                        <span class="text-xl font-bold">$549</span>
+                        <button onclick="addToCart(3)" class="brutal-btn px-4 py-2 text-sm">
+                            Add <i class="fas fa-plus"></i>
                         </button>
                     </div>
                 </div>
@@ -333,34 +302,36 @@
         </a>
     </div>
 
-    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-gray-500/20 backdrop-blur-sm z-[2000] hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] hidden opacity-0 transition-opacity duration-300"></div>
     
-    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full md:max-w-md bg-white z-[2100] cart-closed flex flex-col">
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full md:max-w-md bg-white border-l-[3px] border-black z-[2100] cart-closed flex flex-col shadow-[-10px_0px_30px_rgba(0,0,0,0.2)]">
         
-        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-white">
-            <button onclick="toggleCart()" class="text-gray-400 hover:text-[var(--accent-sage)] transition flex items-center gap-2 text-sm uppercase tracking-widest font-bold">
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-            <h2 class="text-xl font-bold text-gray-900 serif-font italic">Your Collection</h2>
+        <div class="p-6 border-b-[3px] border-black flex justify-between items-center bg-gray-50">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleCart()" class="text-black hover:text-blue-600 transition flex items-center gap-2 font-bold border-2 border-black px-3 py-1 bg-white shadow-[2px_2px_0px_black] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]">
+                    <i class="fas fa-arrow-left"></i> BACK
+                </button>
+            </div>
+            <h2 class="text-xl font-black uppercase tracking-tight">Your Stash</h2>
         </div>
 
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
-            <div class="flex flex-col items-center justify-center h-full text-gray-300">
-                <i class="fas fa-wind text-4xl mb-4"></i>
-                <p class="font-light tracking-wide">Your bag is empty</p>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 bg-white">
+            <div class="flex flex-col items-center justify-center h-full text-gray-400">
+                <i class="fas fa-ghost text-6xl mb-4"></i>
+                <p class="font-bold uppercase">It's empty here</p>
             </div>
         </div>
 
-        <div class="p-6 border-t border-gray-100 bg-[#F9F8F6]">
+        <div class="p-6 border-t-[3px] border-black bg-gray-50">
             <div class="flex justify-between items-center mb-6">
-                <span class="text-gray-500 uppercase tracking-widest text-xs">Total</span>
-                <span id="cart-total" class="text-3xl font-bold text-gray-900 serif-font">$0.00</span>
+                <span class="text-gray-500 font-bold uppercase">Total</span>
+                <span id="cart-total" class="text-3xl font-black tracking-tight">$0.00</span>
             </div>
-            <button onclick="checkout()" class="w-full bg-[var(--text-dark)] hover:bg-[var(--accent-sage)] text-white py-4 rounded-full font-medium transition flex items-center justify-center gap-3 shadow-lg shadow-gray-200">
-                Proceed to Checkout <i class="fab fa-whatsapp text-lg"></i>
+            <button onclick="checkout()" class="brutal-btn w-full py-4 text-lg flex items-center justify-center gap-3 hover:bg-green-400 hover:text-black">
+                Checkout <i class="fab fa-whatsapp text-2xl"></i>
             </button>
             
-            <div class="wc-brand-footer" style="padding-bottom: 0; margin-top: 20px; border-top: 1px solid rgba(0,0,0,0.05);">
+            <div class="wc-brand-footer" style="padding-bottom: 0; margin-top: 20px; border-top: 2px dashed #ccc; background: transparent;">
                 <a href="https://whatscart-five.vercel.app/" target="_blank" class="wc-brand-link">
                     <span class="wc-brand-text">Powered by</span>
                     <div class="wc-brand-icon"><i class="fas fa-shopping-cart"></i></div>
@@ -392,7 +363,7 @@
             setTimeout(() => {
                 img.src = product.images[slideIndices[pid]];
                 img.style.opacity = 1;
-            }, 200);
+            }, 150);
         }
 
         function addToCart(id) {
@@ -433,26 +404,26 @@
 
             if (cart.length === 0) {
                 cartItems.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full text-gray-300">
-                        <i class="fas fa-wind text-4xl mb-4"></i>
-                        <p class="font-light tracking-wide">Your bag is empty</p>
+                    <div class="flex flex-col items-center justify-center h-full text-gray-400">
+                        <i class="fas fa-ghost text-6xl mb-4"></i>
+                        <p class="font-bold uppercase">It's empty here</p>
                     </div>`;
             } else {
                 cartItems.innerHTML = cart.map(item => `
-                    <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-100 relative shadow-sm">
-                        <div class="w-16 h-16 bg-[#F9F8F6] rounded-lg flex items-center justify-center">
-                            <img src="${item.thumb}" class="w-full h-full object-contain p-2">
+                    <div class="flex items-center gap-4 bg-white p-3 border-2 border-black shadow-[4px_4px_0px_0px_#eee] relative">
+                        <div class="w-16 h-16 bg-gray-100 border border-black flex items-center justify-center">
+                            <img src="${item.thumb}" class="w-full h-full object-contain p-1">
                         </div>
                         <div class="flex-1">
-                            <h4 class="font-bold text-sm text-gray-800">${item.name}</h4>
-                            <p class="text-sm font-medium text-[var(--accent-sage)] mb-2">$${item.price.toLocaleString()}</p>
-                            <div class="flex items-center gap-3">
+                            <h4 class="font-black text-sm uppercase">${item.name}</h4>
+                            <p class="text-sm font-bold text-blue-600 mb-2">$${item.price.toLocaleString()}</p>
+                            <div class="flex items-center gap-2">
                                 <button onclick="updateQty(${item.id}, -1)" class="qty-btn"><i class="fas fa-minus"></i></button>
-                                <span class="text-sm font-bold w-4 text-center text-gray-600">${item.qty}</span>
+                                <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
                                 <button onclick="updateQty(${item.id}, 1)" class="qty-btn"><i class="fas fa-plus"></i></button>
                             </div>
                         </div>
-                        <button onclick="removeFromCart(${item.id})" class="absolute top-3 right-3 text-gray-300 hover:text-red-400 transition">
+                        <button onclick="removeFromCart(${item.id})" class="absolute top-2 right-2 text-gray-400 hover:text-red-600 transition">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
