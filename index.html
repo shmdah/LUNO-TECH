@@ -17,12 +17,9 @@
         /* --- 1. ZEN THEME VARIABLES --- */
         :root {
             --bg-color: #F9F8F6;
-            --card-bg: #FFFFFF;
             --text-dark: #2D3436;
-            --text-soft: #636E72;
             --accent-sage: #8DA399;
             --accent-clay: #C08552;
-            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
         }
 
         body {
@@ -30,26 +27,34 @@
             background-color: var(--bg-color);
             color: var(--text-dark);
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        h1, h2, h3, .serif-font {
-            font-family: 'Playfair Display', serif;
-        }
+        h1, h2, h3, .serif-font { font-family: 'Playfair Display', serif; }
 
-        /* --- 2. ORGANIC BACKGROUND --- */
+        /* --- 2. OPTIMIZED BACKGROUND (Static on Mobile to prevent crash) --- */
         .organic-blob {
             position: absolute;
             background: linear-gradient(135deg, #E8E6E1 0%, #F0EFE9 100%);
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            border-radius: 50%;
             z-index: -1;
-            animation: breathe 10s infinite alternate;
         }
-        .blob-1 { top: -10%; left: -5%; width: 600px; height: 600px; opacity: 0.6; }
-        .blob-2 { top: 40%; right: -10%; width: 400px; height: 400px; background: #E3E7E5; opacity: 0.5; animation-delay: -2s; }
+        
+        /* Desktop Animation */
+        @media (min-width: 768px) {
+            .blob-1 { top: -10%; left: -5%; width: 600px; height: 600px; opacity: 0.6; animation: breathe 10s infinite alternate; }
+            .blob-2 { top: 40%; right: -10%; width: 400px; height: 400px; opacity: 0.5; animation: breathe 10s infinite alternate-reverse; }
+            
+            @keyframes breathe {
+                0% { transform: scale(1) rotate(0deg); }
+                100% { transform: scale(1.05) rotate(5deg); }
+            }
+        }
 
-        @keyframes breathe {
-            0% { transform: scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-            100% { transform: scale(1.05) rotate(5deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        /* Mobile Static (Safe Mode) */
+        @media (max-width: 767px) {
+            .blob-1 { top: 0; left: 0; width: 300px; height: 300px; opacity: 0.4; }
+            .blob-2 { bottom: 0; right: 0; width: 250px; height: 250px; opacity: 0.4; }
         }
 
         /* --- 3. HONEY CART (ZEN) --- */
@@ -60,11 +65,11 @@
             border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 15px rgba(107, 142, 128, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.2s;
             cursor: pointer; color: white;
             border: 1px solid rgba(255,255,255,0.2);
         }
-        .honey-cart-zen:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(107, 142, 128, 0.4); }
+        .honey-cart-zen:active { transform: scale(0.95); }
 
         .cart-badge {
             position: absolute; top: -5px; right: -5px;
@@ -72,98 +77,84 @@
             font-size: 10px; font-weight: 700; height: 18px; width: 18px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             opacity: 0; transform: scale(0);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 2px solid #fff; z-index: 10;
         }
         .cart-badge.visible { opacity: 1; transform: scale(1); }
+        
         .cart-pulse { animation: softPop 0.4s ease-in-out; }
-        @keyframes softPop { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+        @keyframes softPop { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
         /* --- 4. PRODUCT CARDS --- */
         .product-card {
-            background: var(--card-bg);
+            background: #FFFFFF;
             border-radius: 20px;
             padding: 1.5rem;
-            box-shadow: var(--shadow-soft);
-            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
             border: 1px solid rgba(0,0,0,0.02);
             display: flex; flex-direction: column; justify-content: space-between;
         }
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.1);
-        }
-
+        
         .product-image-container {
-            /* Adjusted Mobile Height for Single Column */
             height: 220px;
             display: flex; align-items: center; justify-content: center;
             position: relative; z-index: 10;
             margin-bottom: 1rem;
             background: radial-gradient(circle, #F2F0EB 0%, transparent 70%);
         }
-        @media (min-width: 768px) {
-            .product-image-container { height: 280px; }
-        }
-
+        
+        @media (min-width: 768px) { .product-image-container { height: 280px; } }
+        
         .product-img {
             max-height: 90%; max-width: 90%; object-fit: contain;
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.3s;
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-        }
-        .product-card:hover .product-img {
-            transform: scale(1.1) translateY(-10px);
-            filter: drop-shadow(0 20px 25px rgba(0,0,0,0.15));
         }
 
         /* Controls */
         .slide-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: white; color: var(--text-dark);
-            width: 32px; height: 32px; border-radius: 50%;
+            width: 36px; height: 36px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 20; opacity: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: opacity 0.3s, transform 0.2s;
+            cursor: pointer; z-index: 20; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
         }
-        .product-card:hover .slide-btn { opacity: 1; }
-        .slide-btn:hover { background: var(--accent-sage); color: white; }
         .prev-btn { left: 0px; } .next-btn { right: 0px; }
 
         /* --- 5. BUTTONS --- */
         .btn-zen {
             background: var(--text-dark); color: #fff;
             padding: 12px 24px; border-radius: 30px; font-size: 14px;
-            letter-spacing: 0.5px; font-weight: 400; transition: all 0.3s ease;
+            font-weight: 400; transition: background 0.3s;
             width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-zen:hover {
-            background: var(--accent-sage);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(141, 163, 153, 0.4);
-        }
+        .btn-zen:active { background: var(--accent-sage); }
 
         /* --- 6. CART DRAWER --- */
         #cart-drawer { 
-            background: #fff; border-left: none;
-            box-shadow: -20px 0 60px rgba(0,0,0,0.05);
-            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            background: #fff; 
+            box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out;
+            will-change: transform; 
         }
         .cart-open { transform: translateX(0%); }
         .cart-closed { transform: translateX(100%); }
+        
         .qty-btn {
-            width: 24px; height: 24px; border-radius: 50%;
+            width: 28px; height: 28px; border-radius: 50%;
             background: #F0EFE9; color: var(--text-dark);
             display: flex; align-items: center; justify-content: center;
-            font-size: 12px; transition: background 0.2s; cursor: pointer;
+            font-size: 14px; cursor: pointer;
         }
-        .qty-btn:hover { background: var(--accent-sage); color: white; }
 
         /* --- 7. HONEY FOOTER --- */
         .wc-brand-footer {
             width: 100%; display: flex; justify-content: center; align-items: center;
-            padding: 40px 0; opacity: 0.5; transition: opacity 0.3s ease; margin-top: auto;
+            padding: 30px 0; opacity: 0.6; margin-top: auto;
         }
-        .wc-brand-footer:hover { opacity: 1; }
         .wc-brand-link { display: flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; }
         .wc-brand-text { font-family: 'Lato', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-soft); font-weight: 700; }
         .wc-brand-icon {
@@ -172,50 +163,66 @@
             color: #fff; font-size: 10px; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2);
         }
 
-        /* --- 8. RESPONSIVE GRID CONFIGURATION --- */
+        /* --- 8. FEATHER TOAST NOTIFICATION --- */
+        #toast {
+            position: fixed; top: 90px; left: 50%; transform: translateX(-50%) translateY(-50px);
+            background: #fff; color: var(--text-dark);
+            padding: 12px 24px; border-radius: 30px; font-family: 'Lato', sans-serif; font-weight: 700;
+            z-index: 3000; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+            opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid #f0f0f0; width: max-content;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        
+        /* Feather animation */
+        .feather-icon {
+            color: var(--accent-sage);
+            font-size: 18px;
+            animation: floatFeather 2s infinite ease-in-out;
+        }
+        @keyframes floatFeather {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(10deg); }
+        }
+
+        /* RESPONSIVE LAYOUT */
         @media (max-width: 768px) {
             .mobile-hide { display: none; }
             .mobile-show { display: block; }
             #hero h1 { font-size: 3rem; line-height: 1.1; }
             
-            /* FORCE 1 COLUMN ON MOBILE */
+            /* STABLE MOBILE GRID (1 Column) */
             .responsive-grid { 
                 grid-template-columns: 1fr !important;
-                gap: 2rem !important; 
+                gap: 24px !important; 
             }
-            .product-card { padding: 1.5rem; }
-            
-            /* Ensure controls are visible on mobile touch */
-            .slide-btn { opacity: 1; width: 40px; height: 40px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+            .product-card { padding: 1.25rem; }
+            .slide-btn { width: 40px; height: 40px; background: #fff; opacity: 1; }
         }
+        
         @media (min-width: 769px) {
             .mobile-show { display: none; }
             .mobile-hide { display: flex; }
-            .responsive-grid { grid-template-columns: repeat(3, 1fr) !important; }
+            .responsive-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 32px; }
+            .product-card:hover { transform: translateY(-8px); }
+            .slide-btn { opacity: 0; }
+            .product-card:hover .slide-btn { opacity: 1; }
         }
-
-        /* --- 9. TOAST --- */
-        #toast {
-            position: fixed; top: 100px; left: 50%; transform: translateX(-50%) translateY(-50px);
-            background: #fff; color: var(--text-dark);
-            padding: 12px 30px; border-radius: 4px; font-family: 'Lato', sans-serif;
-            z-index: 3000; transition: transform 0.4s, opacity 0.4s;
-            opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-left: 4px solid var(--accent-sage);
-        }
-        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
 
-    <div id="toast"><i class="fas fa-leaf text-[var(--accent-sage)]"></i> Added to collection</div>
+    <div id="toast">
+        <i class="fas fa-feather-alt feather-icon"></i> 
+        <span>Added to collection</span>
+    </div>
 
     <div class="organic-blob blob-1"></div>
     <div class="organic-blob blob-2"></div>
 
-    <nav class="fixed top-0 w-full z-50 bg-[#F9F8F6]/90 backdrop-blur-md border-b border-gray-100/50">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <button class="text-gray-800 text-2xl md:hidden mobile-show" onclick="toggleMobileMenu()">
+    <nav class="fixed top-0 w-full z-50 bg-[#F9F8F6]/95 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <button class="text-gray-800 text-2xl md:hidden mobile-show p-2" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
             </button>
 
@@ -227,7 +234,7 @@
             <div class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-500 mobile-hide uppercase tracking-widest">
                 <a href="#hero" class="hover:text-[var(--accent-sage)] transition">Home</a>
                 <a href="#products" class="hover:text-[var(--accent-sage)] transition">Shop</a>
-                <a href="#" class="hover:text-[var(--accent-sage)] transition">Philosophy</a>
+                <a href="#" class="hover:text-[var(--accent-sage)] transition">About</a>
             </div>
 
             <div class="relative cursor-pointer group" onclick="toggleCart()">
@@ -239,25 +246,25 @@
         </div>
     </nav>
 
-    <div id="mobileNav" class="fixed top-0 left-[-100%] w-full h-full bg-[#F9F8F6] z-[2000] flex flex-col items-center justify-center gap-10 transition-all duration-500">
-        <button class="absolute top-8 right-8 text-gray-800 text-3xl" onclick="toggleMobileMenu()">&times;</button>
+    <div id="mobileNav" class="fixed top-0 left-[-100%] w-full h-full bg-[#F9F8F6] z-[2000] flex flex-col items-center justify-center gap-10 transition-all duration-300">
+        <button class="absolute top-6 right-6 text-gray-800 text-3xl p-4" onclick="toggleMobileMenu()">&times;</button>
         <a href="#hero" class="text-3xl serif-font text-gray-800" onclick="toggleMobileMenu()">Home</a>
         <a href="#products" class="text-3xl serif-font text-gray-800" onclick="toggleMobileMenu()">Shop</a>
-        <a href="#" class="text-3xl serif-font text-gray-800" onclick="toggleMobileMenu()">Journal</a>
+        <a href="#" class="text-3xl serif-font text-gray-800" onclick="toggleMobileMenu()">About</a>
     </div>
 
-    <section id="hero" class="pt-40 pb-12 px-6 max-w-7xl mx-auto text-center flex-grow flex flex-col justify-center items-center min-h-[60vh]">
-        <span class="text-[var(--accent-sage)] text-xs md:text-sm uppercase tracking-[0.2em] mb-6 font-bold">
+    <section id="hero" class="pt-32 pb-12 px-6 max-w-7xl mx-auto text-center flex-grow flex flex-col justify-center items-center min-h-[50vh]">
+        <span class="text-[var(--accent-sage)] text-xs uppercase tracking-[0.2em] mb-4 font-bold">
             Mindful Technology
         </span>
         <h1 class="text-5xl md:text-7xl font-medium text-gray-900 mb-6 leading-tight">
             Design for <br> <i class="serif-font italic text-[var(--accent-clay)]">Wellbeing</i>
         </h1>
         <p class="text-gray-500 max-w-lg mx-auto text-lg mb-12 font-light leading-relaxed">
-            Curated gadgets that blend seamlessly into your life and environment.
+            Curated gadgets that blend seamlessly into your life.
         </p>
 
-        <div id="products" class="grid gap-8 w-full responsive-grid pb-20">
+        <div id="products" class="grid w-full responsive-grid pb-20">
             
             <div class="product-card group text-center md:text-left">
                 <div class="product-image-container">
@@ -265,12 +272,12 @@
                     <img id="img-1" src="images/app1 (1).png" alt="Luno Tech" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=LUNO'">
                     <button class="slide-btn next-btn" onclick="changeSlide(1, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-4">
+                <div class="mt-2">
                     <p class="text-xs text-[var(--accent-sage)] font-bold uppercase tracking-widest mb-2">Concept</p>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2 serif-font">Luno Tech V1</h3>
-                    <p class="text-gray-400 text-sm mb-6 h-10 line-clamp-2">Organic interface design for seamless interaction.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <span class="text-xl font-medium text-gray-800">$4,500</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">Luno Tech V1</h3>
+                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Organic interface design.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+                        <span class="text-lg font-medium text-gray-800">$4,500</span>
                         <button onclick="addToCart(1)" class="btn-zen w-full md:w-auto">
                             Add to Bag
                         </button>
@@ -284,12 +291,12 @@
                     <img id="img-2" src="images/i17.png" alt="iPhone" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=PHONE'">
                     <button class="slide-btn next-btn" onclick="changeSlide(2, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-4">
+                <div class="mt-2">
                     <p class="text-xs text-[var(--accent-clay)] font-bold uppercase tracking-widest mb-2">Mobile</p>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2 serif-font">iPhone 17 Pro</h3>
-                    <p class="text-gray-400 text-sm mb-6 h-10 line-clamp-2">Natural titanium finish, inspired by earth elements.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <span class="text-xl font-medium text-gray-800">$1,199</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">iPhone 17 Pro</h3>
+                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Natural titanium finish.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+                        <span class="text-lg font-medium text-gray-800">$1,199</span>
                         <button onclick="addToCart(2)" class="btn-zen w-full md:w-auto">
                             Add to Bag
                         </button>
@@ -303,12 +310,12 @@
                     <img id="img-3" src="images/ap1.png" alt="AirPods" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=AUDIO'">
                     <button class="slide-btn next-btn" onclick="changeSlide(3, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-4">
+                <div class="mt-2">
                     <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">Audio</p>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2 serif-font">AirPods Max 2</h3>
-                    <p class="text-gray-400 text-sm mb-6 h-10 line-clamp-2">Immersive soundscapes for deep focus and relaxation.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <span class="text-xl font-medium text-gray-800">$549</span>
+                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">AirPods Max 2</h3>
+                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Immersive soundscapes.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+                        <span class="text-lg font-medium text-gray-800">$549</span>
                         <button onclick="addToCart(3)" class="btn-zen w-full md:w-auto">
                             Add to Bag
                         </button>
@@ -330,23 +337,21 @@
     
     <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full md:max-w-md bg-white z-[2100] cart-closed flex flex-col">
         
-        <div class="p-8 border-b border-gray-100 flex justify-between items-center bg-white">
-            <div class="flex items-center gap-3">
-                <button onclick="toggleCart()" class="text-gray-400 hover:text-[var(--accent-sage)] transition flex items-center gap-2 text-sm uppercase tracking-widest font-bold">
-                    <i class="fas fa-arrow-left"></i> Close
-                </button>
-            </div>
-            <h2 class="text-2xl font-bold text-gray-900 serif-font italic">Your Collection</h2>
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-white">
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-[var(--accent-sage)] transition flex items-center gap-2 text-sm uppercase tracking-widest font-bold">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <h2 class="text-xl font-bold text-gray-900 serif-font italic">Your Collection</h2>
         </div>
 
-        <div id="cart-items" class="flex-1 overflow-y-auto p-8 space-y-6">
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6">
             <div class="flex flex-col items-center justify-center h-full text-gray-300">
                 <i class="fas fa-wind text-4xl mb-4"></i>
                 <p class="font-light tracking-wide">Your bag is empty</p>
             </div>
         </div>
 
-        <div class="p-8 border-t border-gray-100 bg-[#F9F8F6]">
+        <div class="p-6 border-t border-gray-100 bg-[#F9F8F6]">
             <div class="flex justify-between items-center mb-6">
                 <span class="text-gray-500 uppercase tracking-widest text-xs">Total</span>
                 <span id="cart-total" class="text-3xl font-bold text-gray-900 serif-font">$0.00</span>
@@ -366,24 +371,9 @@
 
     <script>
         const products = [
-            {
-                id: 1,
-                name: "Luno Tech V1",
-                price: 4500,
-                images: ["images/app1 (1).png", "images/app1 (2).png"]
-            },
-            {
-                id: 2,
-                name: "iPhone 17 Pro",
-                price: 1199,
-                images: ["images/i17.png", "images/i17 (2).png"]
-            },
-            {
-                id: 3,
-                name: "AirPods Max 2",
-                price: 549,
-                images: ["images/ap1.png", "images/ap2.png", "images/ap3.png"]
-            }
+            { id: 1, name: "Luno Tech V1", price: 4500, images: ["images/app1 (1).png", "images/app1 (2).png"] },
+            { id: 2, name: "iPhone 17 Pro", price: 1199, images: ["images/i17.png", "images/i17 (2).png"] },
+            { id: 3, name: "AirPods Max 2", price: 549, images: ["images/ap1.png", "images/ap2.png", "images/ap3.png"] }
         ];
 
         let cart = [];
@@ -391,8 +381,7 @@
 
         function toggleMobileMenu() {
             const nav = document.getElementById('mobileNav');
-            if(nav.style.left === '0px') nav.style.left = '-100%';
-            else nav.style.left = '0px';
+            nav.style.left = nav.style.left === '0px' ? '-100%' : '0px';
         }
 
         function changeSlide(pid, dir) {
@@ -409,7 +398,6 @@
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             const existing = cart.find(item => item.id === id);
-            
             if (existing) existing.qty++;
             else cart.push({ ...product, qty: 1, thumb: product.images[0] });
 
@@ -440,10 +428,8 @@
             const badge = document.getElementById('cart-badge');
             
             const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
-            
             badge.innerText = totalQty;
-            if (totalQty > 0) badge.classList.add('visible'); 
-            else badge.classList.remove('visible'); 
+            badge.classList.toggle('visible', totalQty > 0);
 
             if (cart.length === 0) {
                 cartItems.innerHTML = `
@@ -460,7 +446,6 @@
                         <div class="flex-1">
                             <h4 class="font-bold text-sm text-gray-800">${item.name}</h4>
                             <p class="text-sm font-medium text-[var(--accent-sage)] mb-2">$${item.price.toLocaleString()}</p>
-                            
                             <div class="flex items-center gap-3">
                                 <button onclick="updateQty(${item.id}, -1)" class="qty-btn"><i class="fas fa-minus"></i></button>
                                 <span class="text-sm font-bold w-4 text-center text-gray-600">${item.qty}</span>
@@ -487,13 +472,11 @@
                 drawer.classList.remove('cart-open');
                 drawer.classList.add('cart-closed');
                 overlay.classList.add('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-100'), 0);
                 document.body.style.overflow = 'auto';
             } else {
                 drawer.classList.remove('cart-closed');
                 drawer.classList.add('cart-open');
                 overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.add('opacity-100'), 10);
                 document.body.style.overflow = 'hidden';
             }
         }
