@@ -14,14 +14,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* --- VARIABLES --- */
+        /* --- 1. VARIABLES --- */
         :root {
             --bg-color: #f3f4f6;
             --accent-green: #CCFF00;
             --accent-pink: #FF00FF;
             --accent-blue: #3b82f6;
-            --border-width: 3px;
-            --shadow-hard: 4px 4px 0px 0px #000000;
+            --border-width: 2px;
+            --shadow-hard: 3px 3px 0px 0px #000000;
         }
 
         body {
@@ -34,7 +34,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- UI COMPONENTS --- */
+        /* --- 2. UI COMPONENTS --- */
         .brutal-btn {
             background: #000; color: #fff;
             border: var(--border-width) solid #000;
@@ -42,28 +42,24 @@
             box-shadow: var(--shadow-hard); transition: all 0.1s ease;
             display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .brutal-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px 0px #000; }
+        .brutal-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px 0px #000; }
 
-        /* Larger Cart Button for PC */
         .honey-cart-brutal {
-            position: relative; 
-            width: 44px; height: 44px; /* Default Mobile */
+            position: relative; width: 40px; height: 40px;
             background: var(--accent-blue);
             border: var(--border-width) solid #000;
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
             box-shadow: var(--shadow-hard);
             transition: transform 0.1s; cursor: pointer; color: white;
         }
-        @media (min-width: 768px) {
-            .honey-cart-brutal { width: 52px; height: 52px; } /* Larger on PC */
-        }
-        .honey-cart-brutal:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px 0px #000; }
+        @media (min-width: 768px) { .honey-cart-brutal { width: 50px; height: 50px; border-radius: 12px; } }
+        .honey-cart-brutal:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px 0px #000; }
 
         .cart-badge {
-            position: absolute; top: -8px; right: -8px;
+            position: absolute; top: -6px; right: -6px;
             background-color: var(--accent-pink); color: white;
-            font-size: 11px; font-weight: 800; height: 20px; width: 20px;
+            font-size: 10px; font-weight: 800; height: 18px; width: 18px;
             border: 2px solid #000; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             opacity: 0; transform: scale(0);
@@ -73,61 +69,62 @@
         .cart-pulse { animation: brutalPop 0.3s ease-in-out; }
         @keyframes brutalPop { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* --- PRODUCT CARDS --- */
+        /* --- 3. PRODUCT CARDS --- */
         .product-card {
             background: white;
             border: var(--border-width) solid #000;
-            box-shadow: 5px 5px 0px #000;
-            padding: 1.25rem;
+            box-shadow: 4px 4px 0px #000;
+            padding: 1rem; 
             position: relative; transition: transform 0.2s;
             display: flex; flex-direction: column; justify-content: space-between;
         }
         
         .product-image-container {
-            height: 220px; /* Good size for mobile single column */
+            height: 160px; 
             background: #eee;
             border-bottom: var(--border-width) solid #000;
-            margin: -1.25rem -1.25rem 1rem -1.25rem;
+            margin: -1rem -1rem 0.75rem -1rem;
             display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden;
         }
         
-        @media (min-width: 768px) { .product-image-container { height: 260px; } }
+        @media (min-width: 768px) { 
+            .product-image-container { height: 260px; } 
+            .product-card { padding: 1.5rem; margin: 0; }
+            .product-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000; }
+        }
 
         .product-img {
             max-height: 85%; max-width: 85%; object-fit: contain;
             filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.1));
-            transition: transform 0.2s;
+            transition: opacity 0.2s ease-in-out, transform 0.2s; /* Smoother transition */
+            opacity: 1;
         }
         .product-card:hover .product-img { transform: scale(1.05) rotate(-2deg); }
 
         .slide-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: white; border: 2px solid #000; color: #000;
-            width: 32px; height: 32px; border-radius: 50%;
+            width: 28px; height: 28px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; z-index: 20; box-shadow: 2px 2px 0px #000;
-            font-size: 12px;
+            font-size: 10px;
         }
         .slide-btn:active { transform: translateY(-50%) translate(1px, 1px); box-shadow: 0 0 0 #000; }
-        .prev-btn { left: 10px; } .next-btn { right: 10px; }
+        .prev-btn { left: 8px; } .next-btn { right: 8px; }
 
-        /* --- CART DRAWER UI --- */
+        /* --- 4. CART & EXTRAS --- */
         #cart-drawer { background: #fff; border-left: var(--border-width) solid #000; transition: transform 0.3s ease; }
         .cart-open { transform: translateX(0%); }
         .cart-closed { transform: translateX(100%); }
 
-        /* Bigger Quantity Buttons for Cart */
         .qty-btn {
-            width: 32px; height: 32px; 
-            background: white; border: 2px solid #000; color: #000;
+            width: 24px; height: 24px; background: white; border: 2px solid #000; color: #000;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 800; cursor: pointer; box-shadow: 3px 3px 0px #000;
-            font-size: 14px; transition: all 0.1s;
+            font-weight: 800; cursor: pointer; box-shadow: 2px 2px 0px #000; font-size: 12px;
         }
-        .qty-btn:active { box-shadow: 0 0 0 #000; transform: translate(3px, 3px); }
+        .qty-btn:active { box-shadow: 0 0 0 #000; transform: translate(1px, 1px); }
 
-        /* Footer */
         .wc-brand-footer {
             width: 100%; display: flex; justify-content: center; align-items: center;
             padding: 20px 0; margin-top: auto; border-top: var(--border-width) solid #000; background: #fff;
@@ -139,42 +136,34 @@
             display: flex; align-items: center; justify-content: center; color: #000; font-size: 10px; box-shadow: 2px 2px 0px #000;
         }
 
-        /* Toast */
         #toast {
-            position: fixed; top: 100px; left: 50%; transform: translateX(-50%) translateY(-50px);
-            background: var(--accent-green); border: 3px solid #000; color: #000;
-            padding: 10px 24px; font-weight: 800; text-transform: uppercase; font-size: 14px;
-            box-shadow: 5px 5px 0px #000; z-index: 3000; transition: transform 0.3s, opacity 0.3s;
-            opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 10px;
-            width: max-content;
+            position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-50px);
+            background: var(--accent-green); border: 2px solid #000; color: #000;
+            padding: 8px 20px; font-weight: 800; text-transform: uppercase; font-size: 12px;
+            box-shadow: 4px 4px 0px #000; z-index: 3000; transition: transform 0.3s, opacity 0.3s;
+            opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 8px; width: max-content;
         }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .feather-icon { font-size: 16px; }
+        .feather-icon { font-size: 14px; }
 
-        /* --- RESPONSIVE GRID CONFIGURATION --- */
+        /* --- 5. RESPONSIVE GRID --- */
         @media (max-width: 768px) {
             .mobile-hide { display: none; }
             .mobile-show { display: block; }
-            #hero h1 { font-size: 3rem; line-height: 0.9; margin-bottom: 10px; }
+            #hero h1 { font-size: 2.5rem; line-height: 0.9; margin-bottom: 10px; }
             
-            /* Clean Mobile Grid (1 Column, Spaced Out) */
             .responsive-grid { 
                 grid-template-columns: 1fr !important;
-                gap: 2rem !important; /* Good gap between cards */
-                padding: 0 1rem; /* Side padding so it fits well */
+                gap: 1.5rem !important;
+                padding: 0 1rem;
             }
-            
-            /* Compact Header */
-            nav .h-20 { height: 4rem; } 
-            
-            #cart-drawer { width: 95% !important; max-width: 400px; }
+            nav .h-20 { height: 3.5rem; } 
+            #cart-drawer { width: 90% !important; max-width: 320px; }
         }
         
         @media (min-width: 769px) {
             .mobile-show { display: none; }
             .mobile-hide { display: flex; }
-            
-            /* PC: 3 Columns like Zen Theme */
             .responsive-grid { 
                 grid-template-columns: repeat(3, 1fr) !important; 
                 gap: 2.5rem; 
@@ -189,13 +178,13 @@
         <span>Added to Stash</span>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 bg-white border-b-[3px] border-black">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
-            <button class="text-3xl mobile-show" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    <nav class="fixed top-0 w-full z-50 bg-white border-b-[2px] border-black">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-14 md:h-20 flex items-center justify-between">
+            <button class="text-2xl mobile-show" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
 
-            <div class="text-3xl font-black tracking-tighter flex items-center gap-2 cursor-pointer select-none" onclick="window.scrollTo(0,0)">
-                <div class="w-10 h-10 bg-black text-white flex items-center justify-center font-bold border-2 border-transparent">
-                    <i class="fas fa-bolt"></i>
+            <div class="text-2xl md:text-3xl font-black tracking-tighter flex items-center gap-2 cursor-pointer select-none" onclick="window.scrollTo(0,0)">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-black text-white flex items-center justify-center font-bold border-2 border-transparent">
+                    <i class="fas fa-bolt text-sm md:text-lg"></i>
                 </div>
                 <span>LUNO<span class="text-blue-600">TECH</span></span>
             </div>
@@ -207,28 +196,28 @@
             </div>
 
             <button onclick="toggleCart()" class="honey-cart-brutal" id="cart-btn">
-                <i class="fas fa-shopping-cart text-xl"></i>
+                <i class="fas fa-shopping-cart text-lg md:text-xl"></i>
                 <div id="cart-badge" class="cart-badge">0</div>
             </button>
         </div>
     </nav>
 
-    <div id="mobileNav" class="fixed top-0 left-[-100%] w-full h-full bg-white z-[2000] flex flex-col items-center justify-center gap-8 transition-all duration-200 border-r-[3px] border-black">
-        <button class="absolute top-6 right-6 text-4xl" onclick="toggleMobileMenu()">&times;</button>
-        <a href="#hero" class="text-4xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Home</a>
-        <a href="#products" class="text-4xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Shop</a>
-        <a href="#" class="text-4xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Drops</a>
+    <div id="mobileNav" class="fixed top-0 left-[-100%] w-full h-full bg-white z-[2000] flex flex-col items-center justify-center gap-6 transition-all duration-200 border-r-[3px] border-black">
+        <button class="absolute top-4 right-4 text-3xl" onclick="toggleMobileMenu()">&times;</button>
+        <a href="#hero" class="text-3xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Home</a>
+        <a href="#products" class="text-3xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Shop</a>
+        <a href="#" class="text-3xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Drops</a>
     </div>
 
-    <section id="hero" class="pt-24 md:pt-32 pb-8 px-4 max-w-7xl mx-auto text-center flex-grow flex flex-col justify-center items-center min-h-[40vh] md:min-h-[50vh]">
-        <div class="inline-block bg-[var(--accent-green)] border-2 border-black px-4 py-1 font-bold text-xs mb-4 shadow-[4px_4px_0px_0px_#000]">
+    <section id="hero" class="pt-24 md:pt-32 pb-6 px-4 max-w-7xl mx-auto text-center flex-grow flex flex-col justify-center items-center min-h-[40vh] md:min-h-[50vh]">
+        <div class="inline-block bg-[var(--accent-green)] border-2 border-black px-4 py-1 font-bold text-[10px] md:text-xs mb-4 shadow-[3px_3px_0px_0px_#000]">
             NEW COLLECTION 2026
         </div>
-        <h1 class="text-5xl md:text-8xl font-black tracking-tight mb-4 leading-none uppercase">
+        <h1 class="text-4xl md:text-8xl font-black tracking-tight mb-4 leading-none uppercase">
             WEAR THE <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600" style="-webkit-text-stroke: 2px black; color: transparent;">FUTURE</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600" style="-webkit-text-stroke: 1.5px black; color: transparent;">FUTURE</span>
         </h1>
-        <p class="text-gray-600 max-w-xl mx-auto text-sm md:text-lg font-bold mb-10 border-l-4 border-black pl-4 text-left md:text-center md:border-l-0 md:pl-0">
+        <p class="text-gray-600 max-w-xl mx-auto text-xs md:text-lg font-bold mb-10 border-l-4 border-black pl-3 text-left md:text-center md:border-l-0 md:pl-0">
             High-performance gear. No compromises.
         </p>
 
@@ -355,20 +344,40 @@
         let cart = [];
         let slideIndices = { 1: 0, 2: 0, 3: 0 }; 
 
+        // 1. GLOBAL PRELOADER (FIX FOR SLOW IMAGES)
+        function preloadImages() {
+            products.forEach(p => {
+                p.images.forEach(url => {
+                    const img = new Image();
+                    img.src = url;
+                });
+            });
+        }
+        window.onload = preloadImages;
+
         function toggleMobileMenu() {
             const nav = document.getElementById('mobileNav');
             nav.style.left = nav.style.left === '0px' ? '-100%' : '0px';
         }
 
+        // 2. SMART SLIDESHOW (FIX FOR BLANK SPACE)
         function changeSlide(pid, dir) {
             const product = products.find(p => p.id === pid);
-            slideIndices[pid] = (slideIndices[pid] + dir + product.images.length) % product.images.length;
+            const nextIndex = (slideIndices[pid] + dir + product.images.length) % product.images.length;
+            slideIndices[pid] = nextIndex;
+            
             const img = document.getElementById(`img-${pid}`);
-            img.style.opacity = 0;
-            setTimeout(() => {
-                img.src = product.images[slideIndices[pid]];
-                img.style.opacity = 1;
-            }, 150);
+            const tempImg = new Image();
+            tempImg.src = product.images[nextIndex];
+            
+            // Only swap when ready to prevent blank gap
+            tempImg.onload = () => {
+                img.style.opacity = 0;
+                setTimeout(() => {
+                    img.src = tempImg.src;
+                    img.style.opacity = 1;
+                }, 100);
+            };
         }
 
         function addToCart(id) {
@@ -414,15 +423,15 @@
                         <p class="font-bold uppercase">It's empty here</p>
                     </div>`;
             } else {
-                // FIXED: Spacious, clean layout for cart items (Not tiny/messy)
+                // FIXED CART LAYOUT: Removed overlapping
                 cartItems.innerHTML = cart.map(item => `
                     <div class="flex items-center gap-4 bg-white p-4 border-2 border-black shadow-[4px_4px_0px_0px_#eee] relative">
                         <div class="w-20 h-20 bg-gray-100 border border-black flex items-center justify-center shrink-0">
                             <img src="${item.thumb}" class="w-full h-full object-contain p-2">
                         </div>
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start mb-1">
-                                <h4 class="font-black text-sm uppercase leading-tight pr-6">${item.name}</h4>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-black text-sm uppercase leading-tight pr-6 truncate">${item.name}</h4>
                                 <button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-red-600 transition absolute top-2 right-2">
                                     <i class="fas fa-times text-lg"></i>
                                 </button>
