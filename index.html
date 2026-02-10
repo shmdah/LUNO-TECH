@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUNO TECH | Next Gen Store</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* --- 1. CORE THEME & VARIABLES --- */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: 20px;
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* --- 2. AMBIENT BACKGROUND --- */
+        .ambient-light {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden; pointer-events: none;
+        }
+        .blob {
+            position: absolute; border-radius: 50%;
+            filter: blur(80px); opacity: 0.4;
+            animation: float 10s infinite alternate;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: purple; }
+        .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: blue; animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; width: 300px; height: 300px; background: #0ea5e9; opacity: 0.2; animation-delay: -2s; }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        /* --- 3. GLASS UI UTILITIES --- */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- 4. THE HONEY CART (Blue Gradient) --- */
+        .honey-cart {
+            position: relative;
+            width: 46px; 
+            height: 46px;
+            /* Blue Gradient for Tech Vibe */
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 14px; /* Squircle Shape */
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            color: white;
+        }
+
+        .honey-cart:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.7);
+        }
+
+        /* Red Notification Badge */
+        .cart-badge {
+            position: absolute; 
+            top: -5px; 
+            right: -5px; 
+            background-color: #ef4444; 
+            color: white;
+            font-size: 10px; 
+            font-weight: 800; 
+            height: 18px; 
+            width: 18px; 
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            opacity: 0; 
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #000;
+            z-index: 10;
+        }
+
+        .cart-badge.visible { 
+            opacity: 1; 
+            transform: scale(1); 
+        }
+
+        /* Cart Pulse Animation */
+        .cart-pulse { 
+            animation: cartPop 0.4s ease-in-out; 
+        }
+
+        @keyframes cartPop { 
+            0% { transform: scale(1); } 
+            50% { transform: scale(1.2); } 
+            100% { transform: scale(1); } 
+        }
+
+        /* --- 5. TOAST NOTIFICATION --- */
+        #toast {
+            position: fixed; 
+            top: 100px; 
+            left: 50%; 
+            transform: translateX(-50%) translateY(-50px);
+            background: rgba(30, 30, 30, 0.95); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white; 
+            padding: 12px 24px; 
+            border-radius: 50px; 
+            font-size: 14px; 
+            font-weight: 600;
+            z-index: 2000; 
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            opacity: 0; 
+            pointer-events: none;
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #toast.show { 
+            transform: translateX(-50%) translateY(0); 
+            opacity: 1; 
+        }
+        .toast-icon { color: #3b82f6; }
+
+        /* --- 6. PRODUCT POP & SLIDESHOW --- */
+        .product-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* The Card Hover Effect */
+        .product-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .product-image-container {
+            height: 280px; 
+            display: flex; align-items: center; justify-content: center;
+            position: relative; z-index: 10;
+        }
+
+        .product-img {
+            max-height: 90%; max-width: 90%; object-fit: contain;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            /* Removed cursor pointer from image since it no longer adds to cart */
+        }
+        
+        /* The Image Pop Animation */
+        .product-card:hover .product-img {
+            transform: scale(1.15) translateY(-20px) rotate(-3deg);
+            filter: drop-shadow(0 40px 30px rgba(0,0,0,0.6));
+        }
+
+        /* Glow Behind Product */
+        .glow-bg {
+            position: absolute; width: 120px; height: 120px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease; z-index: -1; border-radius: 50%;
+        }
+        .product-card:hover .glow-bg { transform: translate(-50%, -50%) scale(3.5); }
+
+        /* Slideshow Buttons */
+        .slide-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1); color: white;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 20; opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .product-card:hover .slide-btn { opacity: 1; }
+        .slide-btn:hover { background: rgba(59, 130, 246, 0.8); }
+        .prev-btn { left: 10px; } .next-btn { right: 10px; }
+
+        /* --- 7. HONEY FOOTER --- */
+        .wc-brand-footer {
+            width: 100%; display: flex; justify-content: center; align-items: center;
+            padding: 30px 0; opacity: 0.6; transition: opacity 0.3s ease; margin-top: auto;
+        }
+        .wc-brand-footer:hover { opacity: 1; }
+        .wc-brand-link { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
+        .wc-brand-text { font-family: 'Inter', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255, 255, 255, 0.5); font-weight: 700; }
+        .wc-brand-icon {
+            width: 24px; height: 24px;
+            background: linear-gradient(135deg, #22c55e, #15803d);
+            border-radius: 6px; display: flex; align-items: center; justify-content: center;
+            color: #000; font-size: 12px; box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+        }
+
+        /* --- 8. CART DRAWER ANIMATION --- */
+        #cart-drawer { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .cart-open { transform: translateX(0%); }
+        .cart-closed { transform: translateX(100%); }
+
+        /* Quantity Buttons */
+        .qty-btn {
+            width: 24px; height: 24px; border-radius: 6px;
+            background: rgba(255,255,255,0.1); color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; transition: background 0.2s; cursor: pointer;
+        }
+        .qty-btn:hover { background: rgba(59, 130, 246, 0.5); }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+    <div id="toast"><i class="fas fa-check-circle toast-icon"></i> Added to Cart</div>
+
+    <div class="ambient-light">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <div class="text-3xl font-black tracking-tighter flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-black">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <span>LUNO<span class="text-blue-500">TECH</span></span>
+            </div>
+
+            <button onclick="toggleCart()" class="honey-cart" id="cart-btn">
+                <i class="fas fa-shopping-cart text-lg"></i>
+                <div id="cart-badge" class="cart-badge">0</div>
+            </button>
+        </div>
+    </nav>
+
+    <section id="hero" class="pt-40 pb-10 px-6 max-w-7xl mx-auto text-center flex-grow">
+        <span class="px-4 py-1 rounded-full glass text-xs font-semibold text-blue-400 tracking-wide mb-6 inline-block">
+            NEW ARRIVALS 2026
+        </span>
+        <h1 class="text-5xl md:text-8xl font-black tracking-tight mb-6 leading-[0.9]">
+            FUTURE <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">AESTHETICS</span>
+        </h1>
+        
+        <p class="text-white/60 max-w-2xl mx-auto text-lg mb-16">
+            The ultimate fusion of form and function.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="product-card glass rounded-[2rem] p-6 relative group text-left">
+                <div class="product-image-container mb-6">
+                    <div class="glow-bg"></div>
+                    <button class="slide-btn prev-btn" onclick="changeSlide(1, -1)"><i class="fas fa-chevron-left"></i></button>
+                    <img id="img-1" src="images/app1 (1).png" alt="Luno Tech" class="product-img" 
+                         onerror="this.src='https://via.placeholder.com/400x400/222/555?text=LUNO'">
+                    <button class="slide-btn next-btn" onclick="changeSlide(1, 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="px-2">
+                    <p class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-1">Concept</p>
+                    <h3 class="text-xl font-bold leading-tight text-white">Luno Tech V1</h3>
+                    <p class="text-white/40 text-sm mb-4 h-10">Next-gen wearable interface.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-white">$4,500</span>
+                        <button onclick="addToCart(1)" class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-blue-500 hover:text-white transition shadow-lg">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card glass rounded-[2rem] p-6 relative group text-left">
+                <div class="product-image-container mb-6">
+                    <div class="glow-bg"></div>
+                    <button class="slide-btn prev-btn" onclick="changeSlide(2, -1)"><i class="fas fa-chevron-left"></i></button>
+                    <img id="img-2" src="images/i17.png" alt="iPhone 17" class="product-img" 
+                         onerror="this.src='https://via.placeholder.com/400x400/222/555?text=iPHONE'">
+                    <button class="slide-btn next-btn" onclick="changeSlide(2, 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="px-2">
+                    <p class="text-xs text-purple-400 font-bold uppercase tracking-wider mb-1">Mobile</p>
+                    <h3 class="text-xl font-bold leading-tight text-white">iPhone 17 Pro</h3>
+                    <p class="text-white/40 text-sm mb-4 h-10">Titanium finish, A19 Bionic chip.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-white">$1,199</span>
+                        <button onclick="addToCart(2)" class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-blue-500 hover:text-white transition shadow-lg">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card glass rounded-[2rem] p-6 relative group text-left">
+                <div class="product-image-container mb-6">
+                    <div class="glow-bg"></div>
+                    <button class="slide-btn prev-btn" onclick="changeSlide(3, -1)"><i class="fas fa-chevron-left"></i></button>
+                    <img id="img-3" src="images/ap1.png" alt="AirPods" class="product-img" 
+                         onerror="this.src='https://via.placeholder.com/400x400/222/555?text=AIRPODS'">
+                    <button class="slide-btn next-btn" onclick="changeSlide(3, 1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="px-2">
+                    <p class="text-xs text-green-400 font-bold uppercase tracking-wider mb-1">Audio</p>
+                    <h3 class="text-xl font-bold leading-tight text-white">AirPods Max 2</h3>
+                    <p class="text-white/40 text-sm mb-4 h-10">High-fidelity audio, USB-C.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-bold text-white">$549</span>
+                        <button onclick="addToCart(3)" class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-blue-500 hover:text-white transition shadow-lg">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="wc-brand-footer">
+        <a href="https://whatscart-five.vercel.app/" target="_blank" class="wc-brand-link">
+            <span class="wc-brand-text">Powered by</span>
+            <div class="wc-brand-icon"><i class="fas fa-shopping-cart"></i></div>
+        </a>
+    </div>
+
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-300"></div>
+    
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-[#0a0a0a] border-l border-white/10 z-[100] cart-closed flex flex-col shadow-2xl">
+        
+        <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/50 backdrop-blur-xl">
+            <h2 class="text-xl font-bold">Your Cart</h2>
+            <button onclick="toggleCart()" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/20 transition text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div class="flex flex-col items-center justify-center h-full text-white/30">
+                <i class="fas fa-shopping-basket text-4xl mb-3"></i>
+                <p>Cart is empty</p>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-white/10 bg-black/80 backdrop-blur-xl">
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-white/60">Total</span>
+                <span id="cart-total" class="text-3xl font-bold tracking-tight">$0.00</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-4 rounded-xl font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-blue-900/50">
+                Checkout on WhatsApp <i class="fab fa-whatsapp text-lg"></i>
+            </button>
+            
+            <div class="wc-brand-footer" style="padding-bottom: 0; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+                <a href="https://whatscart-five.vercel.app/" target="_blank" class="wc-brand-link">
+                    <span class="wc-brand-text">Powered by</span>
+                    <div class="wc-brand-icon"><i class="fas fa-shopping-cart"></i></div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const products = [
+            {
+                id: 1,
+                name: "Luno Tech V1",
+                price: 4500,
+                images: ["images/app1 (1).png", "images/app1 (2).png"]
+            },
+            {
+                id: 2,
+                name: "iPhone 17 Pro",
+                price: 1199,
+                images: ["images/i17.png", "images/i17 (2).png"]
+            },
+            {
+                id: 3,
+                name: "AirPods Max 2",
+                price: 549,
+                images: ["images/ap1.png", "images/ap2.png", "images/ap3.png"]
+            }
+        ];
+
+        let cart = [];
+        let slideIndices = { 1: 0, 2: 0, 3: 0 }; 
+
+        // --- SLIDESHOW LOGIC ---
+        function changeSlide(pid, dir) {
+            const product = products.find(p => p.id === pid);
+            slideIndices[pid] = (slideIndices[pid] + dir + product.images.length) % product.images.length;
+            
+            const img = document.getElementById(`img-${pid}`);
+            img.style.opacity = 0;
+            setTimeout(() => {
+                img.src = product.images[slideIndices[pid]];
+                img.style.opacity = 1;
+            }, 200);
+        }
+
+        // --- CART LOGIC ---
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+            
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1, thumb: product.images[0] });
+            }
+
+            updateCartUI();
+            showToast(`Added ${product.name} to Cart`);
+            
+            // Pulse the cart icon
+            const cartBtn = document.getElementById('cart-btn'); 
+            cartBtn.classList.add('cart-pulse'); 
+            setTimeout(() => cartBtn.classList.remove('cart-pulse'), 400);
+        }
+
+        function updateQty(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+
+            item.qty += change;
+            
+            if (item.qty <= 0) {
+                removeFromCart(id);
+            } else {
+                updateCartUI();
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const badge = document.getElementById('cart-badge');
+            
+            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+            
+            badge.innerText = totalQty;
+            if (totalQty > 0) { 
+                badge.classList.add('visible'); 
+            } else { 
+                badge.classList.remove('visible'); 
+            }
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-white/30">
+                        <i class="fas fa-shopping-basket text-4xl mb-3"></i>
+                        <p>Cart is empty</p>
+                    </div>`;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 relative">
+                        <div class="w-16 h-16 bg-white/5 rounded-xl flex items-center justify-center">
+                            <img src="${item.thumb}" class="w-full h-full object-contain p-2" onerror="this.src='https://via.placeholder.com/100'">
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-base text-white mb-1">${item.name}</h4>
+                            <p class="text-sm text-blue-400 font-mono mb-2">$${item.price.toLocaleString()}</p>
+                            
+                            <div class="flex items-center gap-3 bg-black/40 rounded-lg w-max px-2 py-1 border border-white/10">
+                                <button onclick="updateQty(${item.id}, -1)" class="qty-btn hover:text-white text-white/60"><i class="fas fa-minus"></i></button>
+                                <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+                                <button onclick="updateQty(${item.id}, 1)" class="qty-btn hover:text-white text-white/60"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${item.id})" class="absolute top-4 right-4 text-white/30 hover:text-red-500 transition">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            const total = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            cartTotal.innerText = '$' + total.toLocaleString();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            const body = document.body;
+
+            const isOpen = drawer.classList.contains('cart-open');
+
+            if (isOpen && !forceOpen) {
+                drawer.classList.remove('cart-open');
+                drawer.classList.add('cart-closed');
+                overlay.classList.add('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-100'), 0);
+                body.style.overflow = 'auto';
+            } else {
+                drawer.classList.remove('cart-closed');
+                drawer.classList.add('cart-open');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+                body.style.overflow = 'hidden';
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = `<i class="fas fa-check-circle toast-icon"></i> ${message}`;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            let msg = "Hello LUNO TECH, I would like to order:%0A%0A";
+            let total = 0;
+            cart.forEach((item, index) => {
+                msg += `${index+1}. ${item.name} (x${item.qty}) - $${(item.price * item.qty).toLocaleString()}%0A`;
+                total += item.price * item.qty;
+            });
+            msg += `%0ATotal: $${total.toLocaleString()}`;
+            window.open(`https://wa.me/254700000000?text=${msg}`, '_blank');
+        }
+
+        // Initialize UI
+        updateCartUI();
+
+    </script>
+</body>
+</html>
