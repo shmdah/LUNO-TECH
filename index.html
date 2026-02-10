@@ -3,171 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LUNO TECH | HYPE EDITION</title>
+    <title>LUNO TECH | SYSTEM 95</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* --- 1. VARIABLES --- */
+        /* --- 1. RETRO VARIABLES --- */
         :root {
-            --bg-color: #f3f4f6;
-            --accent-green: #CCFF00;
-            --accent-pink: #FF00FF;
-            --accent-blue: #3b82f6;
-            --border-width: 2px;
-            --shadow-hard: 3px 3px 0px 0px #000000;
+            --win-gray: #c0c0c0;
+            --win-blue: #000080;
+            --win-teal: #008080;
+            --win-light: #ffffff;
+            --win-dark: #808080;
+            --win-black: #000000;
         }
 
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'VT323', monospace;
+            background-color: var(--win-teal);
+            /* Classic Dithered Background Pattern */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=');
             color: #000;
             overflow-x: hidden;
-            background-image: radial-gradient(#000 1px, transparent 1px);
-            background-size: 20px 20px;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- 2. UI COMPONENTS --- */
-        .brutal-btn {
-            background: #000; color: #fff;
-            border: var(--border-width) solid #000;
-            font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-            box-shadow: var(--shadow-hard); transition: all 0.1s ease;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
+        /* --- 2. RETRO UI COMPONENTS --- */
+        /* The Classic 3D Bevel Look */
+        .retro-bevel {
+            background-color: var(--win-gray);
+            border-top: 2px solid var(--win-light);
+            border-left: 2px solid var(--win-light);
+            border-right: 2px solid var(--win-black);
+            border-bottom: 2px solid var(--win-black);
+            box-shadow: 1px 1px 0px var(--win-black);
         }
-        .brutal-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px 0px #000; }
 
-        .honey-cart-brutal {
-            position: relative; width: 40px; height: 40px;
-            background: var(--accent-blue);
-            border: var(--border-width) solid #000;
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: var(--shadow-hard);
-            transition: transform 0.1s; cursor: pointer; color: white;
+        .retro-inset {
+            background-color: #fff;
+            border-top: 2px solid var(--win-dark);
+            border-left: 2px solid var(--win-dark);
+            border-right: 2px solid var(--win-light);
+            border-bottom: 2px solid var(--win-light);
         }
-        @media (min-width: 768px) { .honey-cart-brutal { width: 50px; height: 50px; border-radius: 12px; } }
-        .honey-cart-brutal:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px 0px #000; }
+
+        /* Retro Button Interaction */
+        .retro-btn {
+            background: var(--win-gray);
+            border-top: 2px solid var(--win-light);
+            border-left: 2px solid var(--win-light);
+            border-right: 2px solid var(--win-black);
+            border-bottom: 2px solid var(--win-black);
+            color: #000; font-size: 18px; text-transform: uppercase;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: none; /* Instant press for retro feel */
+        }
+        .retro-btn:active {
+            border-top: 2px solid var(--win-black);
+            border-left: 2px solid var(--win-black);
+            border-right: 2px solid var(--win-light);
+            border-bottom: 2px solid var(--win-light);
+            transform: translate(1px, 1px);
+        }
+
+        /* Title Bar */
+        .title-bar {
+            background: linear-gradient(90deg, var(--win-blue), #1084d0);
+            color: white; padding: 2px 4px; font-size: 18px;
+            display: flex; justify-content: space-between; align-items: center;
+            letter-spacing: 1px;
+        }
+
+        /* --- 3. HONEY CART (RETRO EDITION) --- */
+        .honey-cart-retro {
+            position: relative; width: 44px; height: 44px;
+            background: var(--win-gray);
+            /* Outer Bevel */
+            border-top: 2px solid var(--win-light);
+            border-left: 2px solid var(--win-light);
+            border-right: 2px solid var(--win-black);
+            border-bottom: 2px solid var(--win-black);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+        
+        .honey-inner-gradient {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: 1px solid #000;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+        }
+
+        .honey-cart-retro:active {
+            border-top: 2px solid var(--win-black);
+            border-left: 2px solid var(--win-black);
+            border-right: 2px solid var(--win-light);
+            border-bottom: 2px solid var(--win-light);
+        }
+        .honey-cart-retro:active .honey-inner-gradient { transform: translate(1px, 1px); }
 
         .cart-badge {
-            position: absolute; top: -6px; right: -6px;
-            background-color: var(--accent-pink); color: white;
-            font-size: 10px; font-weight: 800; height: 18px; width: 18px;
-            border: 2px solid #000; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; transform: scale(0);
-            transition: all 0.2s; z-index: 10;
+            position: absolute; top: -4px; right: -4px;
+            background-color: #ff0000; color: white;
+            font-size: 14px; font-weight: 400; height: 20px; width: 20px;
+            border: 1px solid #000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: scale(0); transition: all 0.2s; z-index: 10;
         }
         .cart-badge.visible { opacity: 1; transform: scale(1); }
-        .cart-pulse { animation: brutalPop 0.3s ease-in-out; }
-        @keyframes brutalPop { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .cart-pulse { animation: blink 0.2s steps(2, start) 2; }
+        @keyframes blink { to { visibility: hidden; } }
 
-        /* --- 3. PRODUCT CARDS --- */
-        .product-card {
-            background: white;
-            border: var(--border-width) solid #000;
-            box-shadow: 4px 4px 0px #000;
-            padding: 1rem; 
-            position: relative; transition: transform 0.2s;
+        /* --- 4. PRODUCT WINDOWS --- */
+        .product-window {
+            @apply retro-bevel;
+            padding: 4px;
             display: flex; flex-direction: column; justify-content: space-between;
         }
         
         .product-image-container {
-            height: 160px; 
-            background: #eee;
-            border-bottom: var(--border-width) solid #000;
-            margin: -1rem -1rem 0.75rem -1rem;
+            height: 180px; /* Mobile Height */
+            background: #fff;
+            border: 2px solid var(--win-dark); /* Inset look */
+            margin-bottom: 10px;
             display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden;
         }
         
-        @media (min-width: 768px) { 
-            .product-image-container { height: 260px; } 
-            .product-card { padding: 1.5rem; margin: 0; }
-            .product-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000; }
-        }
+        @media (min-width: 768px) { .product-image-container { height: 240px; } }
 
         .product-img {
             max-height: 85%; max-width: 85%; object-fit: contain;
-            filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.1));
-            transition: opacity 0.2s ease-in-out, transform 0.2s; /* Smoother transition */
-            opacity: 1;
+            /* Pixelated rendering for images */
+            image-rendering: pixelated; 
+            transition: opacity 0.1s;
         }
-        .product-card:hover .product-img { transform: scale(1.05) rotate(-2deg); }
 
+        /* Slideshow Buttons (Small Squares) */
         .slide-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
-            background: white; border: 2px solid #000; color: #000;
-            width: 28px; height: 28px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 20; box-shadow: 2px 2px 0px #000;
-            font-size: 10px;
+            width: 24px; height: 24px; 
+            @apply retro-btn;
+            z-index: 20; font-size: 14px;
         }
-        .slide-btn:active { transform: translateY(-50%) translate(1px, 1px); box-shadow: 0 0 0 #000; }
-        .prev-btn { left: 8px; } .next-btn { right: 8px; }
+        .prev-btn { left: 4px; } .next-btn { right: 4px; }
 
-        /* --- 4. CART & EXTRAS --- */
-        #cart-drawer { background: #fff; border-left: var(--border-width) solid #000; transition: transform 0.3s ease; }
+        /* --- 5. CART DRAWER (FILE EXPLORER) --- */
+        #cart-drawer { 
+            background: var(--win-gray);
+            border-left: 2px solid var(--win-light);
+            border-right: 2px solid var(--win-black); /* Make it look like a window */
+            box-shadow: -10px 0 0 rgba(0,0,0,0.2);
+            transition: transform 0.2s steps(10); /* Jerky retro motion */
+        }
         .cart-open { transform: translateX(0%); }
         .cart-closed { transform: translateX(100%); }
 
         .qty-btn {
-            width: 24px; height: 24px; background: white; border: 2px solid #000; color: #000;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; cursor: pointer; box-shadow: 2px 2px 0px #000; font-size: 12px;
+            width: 24px; height: 24px; 
+            @apply retro-btn;
+            font-size: 16px; font-weight: bold;
         }
-        .qty-btn:active { box-shadow: 0 0 0 #000; transform: translate(1px, 1px); }
 
+        /* --- 6. HONEY FOOTER --- */
         .wc-brand-footer {
             width: 100%; display: flex; justify-content: center; align-items: center;
-            padding: 20px 0; margin-top: auto; border-top: var(--border-width) solid #000; background: #fff;
+            padding: 10px 0; margin-top: auto;
+            background: var(--win-gray);
+            border-top: 2px solid var(--win-light);
         }
         .wc-brand-link { display: flex; align-items: center; gap: 6px; text-decoration: none; cursor: pointer; }
-        .wc-brand-text { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #000; font-weight: 800; }
+        .wc-brand-text { font-size: 16px; text-transform: uppercase; color: #000; }
         .wc-brand-icon {
-            width: 20px; height: 20px; background: #22c55e; border: 2px solid #000; border-radius: 4px; 
-            display: flex; align-items: center; justify-content: center; color: #000; font-size: 10px; box-shadow: 2px 2px 0px #000;
+            width: 20px; height: 20px; background: linear-gradient(135deg, #22c55e, #15803d);
+            border: 1px solid #000; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 10px;
         }
 
+        /* --- 7. FEATHER TOAST (SYSTEM ALERT) --- */
         #toast {
-            position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-50px);
-            background: var(--accent-green); border: 2px solid #000; color: #000;
-            padding: 8px 20px; font-weight: 800; text-transform: uppercase; font-size: 12px;
-            box-shadow: 4px 4px 0px #000; z-index: 3000; transition: transform 0.3s, opacity 0.3s;
-            opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 8px; width: max-content;
+            position: fixed; top: 100px; left: 50%; transform: translateX(-50%) translateY(-50px);
+            @apply retro-bevel;
+            padding: 8px 16px; display: flex; align-items: center; gap: 8px;
+            z-index: 3000; transition: transform 0.1s, opacity 0.1s;
+            opacity: 0; pointer-events: none; width: max-content;
         }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .feather-icon { font-size: 14px; }
+        .feather-icon { font-size: 18px; color: var(--win-blue); }
 
-        /* --- 5. RESPONSIVE GRID --- */
+        /* --- 8. RESPONSIVE GRID --- */
         @media (max-width: 768px) {
             .mobile-hide { display: none; }
             .mobile-show { display: block; }
-            #hero h1 { font-size: 2.5rem; line-height: 0.9; margin-bottom: 10px; }
             
+            /* Clean Mobile Grid (1 Column) */
             .responsive-grid { 
                 grid-template-columns: 1fr !important;
                 gap: 1.5rem !important;
                 padding: 0 1rem;
             }
-            nav .h-20 { height: 3.5rem; } 
-            #cart-drawer { width: 90% !important; max-width: 320px; }
+            
+            nav .h-20 { height: 3.5rem; }
+            #cart-drawer { width: 95% !important; max-width: 320px; }
         }
         
         @media (min-width: 769px) {
             .mobile-show { display: none; }
             .mobile-hide { display: flex; }
-            .responsive-grid { 
-                grid-template-columns: repeat(3, 1fr) !important; 
-                gap: 2.5rem; 
-            }
+            .responsive-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 2rem; }
         }
     </style>
 </head>
@@ -175,112 +224,128 @@
 
     <div id="toast">
         <i class="fas fa-feather-alt feather-icon"></i>
-        <span>Added to Stash</span>
+        <span class="text-lg">Item Added to C:</span>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 bg-white border-b-[2px] border-black">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 h-14 md:h-20 flex items-center justify-between">
-            <button class="text-2xl mobile-show" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
-
-            <div class="text-2xl md:text-3xl font-black tracking-tighter flex items-center gap-2 cursor-pointer select-none" onclick="window.scrollTo(0,0)">
-                <div class="w-8 h-8 md:w-10 md:h-10 bg-black text-white flex items-center justify-center font-bold border-2 border-transparent">
-                    <i class="fas fa-bolt text-sm md:text-lg"></i>
-                </div>
-                <span>LUNO<span class="text-blue-600">TECH</span></span>
-            </div>
-
-            <div class="hidden md:flex items-center gap-8 font-bold uppercase tracking-wide mobile-hide">
-                <a href="#hero" class="hover:text-blue-600 hover:underline decoration-2 underline-offset-4">Home</a>
-                <a href="#products" class="hover:text-blue-600 hover:underline decoration-2 underline-offset-4">Shop</a>
-                <a href="#" class="hover:text-blue-600 hover:underline decoration-2 underline-offset-4">Drops</a>
-            </div>
-
-            <button onclick="toggleCart()" class="honey-cart-brutal" id="cart-btn">
-                <i class="fas fa-shopping-cart text-lg md:text-xl"></i>
-                <div id="cart-badge" class="cart-badge">0</div>
+    <nav class="fixed top-0 w-full z-50 retro-bevel" style="border-bottom: 2px solid var(--win-black);">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-14 md:h-20 flex items-center justify-between bg-[var(--win-gray)]">
+            
+            <button class="mobile-show retro-btn px-2 py-1 flex items-center gap-2" onclick="toggleMobileMenu()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Windows_logo_-_2012_%28dark_blue%29.svg" width="16" class="opacity-50">
+                <span class="font-bold text-lg">START</span>
             </button>
+
+            <div class="text-2xl md:text-4xl font-bold tracking-tight flex items-center gap-2 cursor-pointer select-none" onclick="window.scrollTo(0,0)">
+                <i class="fas fa-save text-[var(--win-blue)]"></i>
+                <span>LUNO_TECH.EXE</span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-6 text-xl mobile-hide">
+                <a href="#hero" class="hover:underline hover:text-[var(--win-blue)] decoration-2">C:\Home</a>
+                <a href="#products" class="hover:underline hover:text-[var(--win-blue)] decoration-2">C:\Catalog</a>
+            </div>
+
+            <div onclick="toggleCart()" class="honey-cart-retro" id="cart-btn">
+                <div class="honey-inner-gradient">
+                    <i class="fas fa-shopping-cart text-sm"></i>
+                </div>
+                <div id="cart-badge" class="cart-badge">0</div>
+            </div>
         </div>
     </nav>
 
-    <div id="mobileNav" class="fixed top-0 left-[-100%] w-full h-full bg-white z-[2000] flex flex-col items-center justify-center gap-6 transition-all duration-200 border-r-[3px] border-black">
-        <button class="absolute top-4 right-4 text-3xl" onclick="toggleMobileMenu()">&times;</button>
-        <a href="#hero" class="text-3xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Home</a>
-        <a href="#products" class="text-3xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Shop</a>
-        <a href="#" class="text-3xl font-black uppercase hover:text-blue-600" onclick="toggleMobileMenu()">Drops</a>
+    <div id="mobileNav" class="fixed bottom-0 left-[-100%] w-3/4 h-auto retro-bevel z-[2000] flex flex-col p-2 gap-2 transition-all duration-100" style="bottom: 0; top: auto; border: 2px solid white; box-shadow: 4px 4px 0 #000;">
+        <div class="bg-[var(--win-blue)] text-white p-2 font-bold text-xl mb-2 flex items-center gap-2">
+            <i class="fas fa-user-circle"></i> Guest User
+        </div>
+        <a href="#hero" class="retro-btn w-full text-left justify-start px-4 py-2 hover:bg-[var(--win-blue)] hover:text-white" onclick="toggleMobileMenu()">My Computer</a>
+        <a href="#products" class="retro-btn w-full text-left justify-start px-4 py-2 hover:bg-[var(--win-blue)] hover:text-white" onclick="toggleMobileMenu()">Programs</a>
+        <a href="#" class="retro-btn w-full text-left justify-start px-4 py-2 hover:bg-[var(--win-blue)] hover:text-white" onclick="toggleMobileMenu()">Shut Down</a>
     </div>
 
-    <section id="hero" class="pt-24 md:pt-32 pb-6 px-4 max-w-7xl mx-auto text-center flex-grow flex flex-col justify-center items-center min-h-[40vh] md:min-h-[50vh]">
-        <div class="inline-block bg-[var(--accent-green)] border-2 border-black px-4 py-1 font-bold text-[10px] md:text-xs mb-4 shadow-[3px_3px_0px_0px_#000]">
-            NEW COLLECTION 2026
+    <section id="hero" class="pt-24 md:pt-32 pb-8 px-4 max-w-7xl mx-auto text-center flex-grow flex flex-col justify-center items-center min-h-[40vh]">
+        <div class="retro-bevel px-4 py-2 mb-6 bg-white inline-block">
+            <span class="text-[var(--win-blue)] text-lg">*** WELCOME TO THE FUTURE ***</span>
         </div>
-        <h1 class="text-4xl md:text-8xl font-black tracking-tight mb-4 leading-none uppercase">
-            WEAR THE <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600" style="-webkit-text-stroke: 1.5px black; color: transparent;">FUTURE</span>
+        <h1 class="text-5xl md:text-8xl mb-4 leading-none text-shadow-retro" style="text-shadow: 2px 2px 0px #fff;">
+            LUNO TECH
         </h1>
-        <p class="text-gray-600 max-w-xl mx-auto text-xs md:text-lg font-bold mb-10 border-l-4 border-black pl-3 text-left md:text-center md:border-l-0 md:pl-0">
-            High-performance gear. No compromises.
+        <p class="text-xl mb-10 max-w-lg mx-auto bg-[var(--win-blue)] text-white px-2">
+            Loading high-performance assets...
         </p>
 
         <div id="products" class="grid w-full responsive-grid pb-10">
             
-            <div class="product-card group">
-                <div class="product-image-container">
-                    <button class="slide-btn prev-btn" onclick="changeSlide(1, -1)"><i class="fas fa-chevron-left"></i></button>
-                    <img id="img-1" src="images/app1 (1).png" alt="Luno Tech" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/000/fff?text=LUNO'">
-                    <button class="slide-btn next-btn" onclick="changeSlide(1, 1)"><i class="fas fa-chevron-right"></i></button>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-black leading-tight uppercase">Luno Tech V1</h3>
-                        <span class="bg-black text-white px-2 py-1 text-xs font-bold">CONCEPT</span>
+            <div class="product-window group">
+                <div class="title-bar mb-2">
+                    <span>Luno_v1.jpg</span>
+                    <div class="flex gap-1">
+                        <button class="retro-btn w-4 h-4 flex items-center justify-center text-xs">_</button>
+                        <button class="retro-btn w-4 h-4 flex items-center justify-center text-xs">X</button>
                     </div>
-                    <p class="text-sm font-medium text-gray-500 h-8 leading-snug">Wearable holographic interface.</p>
-                    <div class="flex items-center justify-between mt-2 pt-3 border-t-2 border-black border-dashed">
-                        <span class="text-xl font-bold">$4,500</span>
-                        <button onclick="addToCart(1)" class="brutal-btn px-4 py-2 text-sm">
-                            Add <i class="fas fa-plus"></i>
+                </div>
+                <div class="product-image-container">
+                    <button class="slide-btn prev-btn" onclick="changeSlide(1, -1)">◄</button>
+                    <img id="img-1" src="images/app1 (1).png" alt="Luno Tech" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/ccc/000?text=IMG_ERR'">
+                    <button class="slide-btn next-btn" onclick="changeSlide(1, 1)">►</button>
+                </div>
+                <div class="px-2 pb-2">
+                    <h3 class="text-2xl font-bold mb-1">Luno Tech V1</h3>
+                    <p class="text-lg text-gray-700 mb-2">Interface_Wearable</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-2xl font-bold text-[var(--win-blue)]">$4,500</span>
+                        <button onclick="addToCart(1)" class="retro-btn px-4 py-1 text-lg">
+                            Add <i class="fas fa-plus ml-2"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="product-card group">
-                <div class="product-image-container">
-                    <button class="slide-btn prev-btn" onclick="changeSlide(2, -1)"><i class="fas fa-chevron-left"></i></button>
-                    <img id="img-2" src="images/i17.png" alt="iPhone" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/000/fff?text=iPHONE'">
-                    <button class="slide-btn next-btn" onclick="changeSlide(2, 1)"><i class="fas fa-chevron-right"></i></button>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-black leading-tight uppercase">iPhone 17 Pro</h3>
-                        <span class="bg-purple-600 text-white px-2 py-1 text-xs font-bold">MOBILE</span>
+            <div class="product-window group">
+                <div class="title-bar mb-2">
+                    <span>iP17_Pro.exe</span>
+                    <div class="flex gap-1">
+                        <button class="retro-btn w-4 h-4 flex items-center justify-center text-xs">_</button>
+                        <button class="retro-btn w-4 h-4 flex items-center justify-center text-xs">X</button>
                     </div>
-                    <p class="text-sm font-medium text-gray-500 h-8 leading-snug">Titanium finish, A19 Bionic.</p>
-                    <div class="flex items-center justify-between mt-2 pt-3 border-t-2 border-black border-dashed">
-                        <span class="text-xl font-bold">$1,199</span>
-                        <button onclick="addToCart(2)" class="brutal-btn px-4 py-2 text-sm">
-                            Add <i class="fas fa-plus"></i>
+                </div>
+                <div class="product-image-container">
+                    <button class="slide-btn prev-btn" onclick="changeSlide(2, -1)">◄</button>
+                    <img id="img-2" src="images/i17.png" alt="iPhone" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/ccc/000?text=IMG_ERR'">
+                    <button class="slide-btn next-btn" onclick="changeSlide(2, 1)">►</button>
+                </div>
+                <div class="px-2 pb-2">
+                    <h3 class="text-2xl font-bold mb-1">iPhone 17 Pro</h3>
+                    <p class="text-lg text-gray-700 mb-2">Titanium_Shell</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-2xl font-bold text-[var(--win-blue)]">$1,199</span>
+                        <button onclick="addToCart(2)" class="retro-btn px-4 py-1 text-lg">
+                            Add <i class="fas fa-plus ml-2"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="product-card group">
-                <div class="product-image-container">
-                    <button class="slide-btn prev-btn" onclick="changeSlide(3, -1)"><i class="fas fa-chevron-left"></i></button>
-                    <img id="img-3" src="images/ap1.png" alt="AirPods" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/000/fff?text=AUDIO'">
-                    <button class="slide-btn next-btn" onclick="changeSlide(3, 1)"><i class="fas fa-chevron-right"></i></button>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-xl font-black leading-tight uppercase">AirPods Max 2</h3>
-                        <span class="bg-green-600 text-white px-2 py-1 text-xs font-bold">AUDIO</span>
+            <div class="product-window group">
+                <div class="title-bar mb-2">
+                    <span>Audio_Max.wav</span>
+                    <div class="flex gap-1">
+                        <button class="retro-btn w-4 h-4 flex items-center justify-center text-xs">_</button>
+                        <button class="retro-btn w-4 h-4 flex items-center justify-center text-xs">X</button>
                     </div>
-                    <p class="text-sm font-medium text-gray-500 h-8 leading-snug">High-fidelity USB-C audio.</p>
-                    <div class="flex items-center justify-between mt-2 pt-3 border-t-2 border-black border-dashed">
-                        <span class="text-xl font-bold">$549</span>
-                        <button onclick="addToCart(3)" class="brutal-btn px-4 py-2 text-sm">
-                            Add <i class="fas fa-plus"></i>
+                </div>
+                <div class="product-image-container">
+                    <button class="slide-btn prev-btn" onclick="changeSlide(3, -1)">◄</button>
+                    <img id="img-3" src="images/ap1.png" alt="AirPods" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/ccc/000?text=IMG_ERR'">
+                    <button class="slide-btn next-btn" onclick="changeSlide(3, 1)">►</button>
+                </div>
+                <div class="px-2 pb-2">
+                    <h3 class="text-2xl font-bold mb-1">AirPods Max 2</h3>
+                    <p class="text-lg text-gray-700 mb-2">HiFi_Audio</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-2xl font-bold text-[var(--win-blue)]">$549</span>
+                        <button onclick="addToCart(3)" class="retro-btn px-4 py-1 text-lg">
+                            Add <i class="fas fa-plus ml-2"></i>
                         </button>
                     </div>
                 </div>
@@ -296,36 +361,43 @@
         </a>
     </div>
 
-    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] hidden opacity-0 transition-opacity duration-300"></div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-[2000] hidden opacity-0 transition-opacity duration-300"></div>
     
-    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full md:max-w-md bg-white border-l-[3px] border-black z-[2100] cart-closed flex flex-col shadow-[-10px_0px_30px_rgba(0,0,0,0.2)]">
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full md:max-w-md z-[2100] cart-closed flex flex-col">
         
-        <div class="p-6 border-b-[3px] border-black flex justify-between items-center bg-gray-50">
-            <div class="flex items-center gap-3">
-                <button onclick="toggleCart()" class="text-black hover:text-blue-600 transition flex items-center gap-2 font-bold border-2 border-black px-3 py-1 bg-white shadow-[2px_2px_0px_black] active:shadow-none active:translate-x-[2px] active:translate-y-[2px] text-sm uppercase">
-                    <i class="fas fa-arrow-left"></i> BACK
-                </button>
+        <div class="title-bar p-2">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-hdd"></i> C:\My_Cart
             </div>
-            <h2 class="text-xl font-black uppercase tracking-tight">Your Stash</h2>
+            <button onclick="toggleCart()" class="retro-btn w-6 h-6 flex items-center justify-center text-sm font-bold bg-gray-200">X</button>
+        </div>
+        
+        <div class="p-2 border-b-2 border-[var(--win-dark)] bg-[var(--win-gray)] flex gap-2">
+            <button onclick="toggleCart()" class="retro-btn px-2 text-sm">
+                <i class="fas fa-arrow-left"></i> Up
+            </button>
+            <div class="retro-inset w-full bg-white px-2 flex items-center text-sm">
+                C:\LunoTech\Cart
+            </div>
         </div>
 
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4 bg-white">
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4 bg-white retro-inset m-2">
             <div class="flex flex-col items-center justify-center h-full text-gray-400">
-                <i class="fas fa-ghost text-6xl mb-4"></i>
-                <p class="font-bold uppercase">It's empty here</p>
+                <i class="fas fa-folder-open text-6xl mb-4"></i>
+                <p class="text-xl">Folder is Empty</p>
             </div>
         </div>
 
-        <div class="p-6 border-t-[3px] border-black bg-gray-50">
-            <div class="flex justify-between items-center mb-6">
-                <span class="text-gray-500 font-bold uppercase">Total</span>
-                <span id="cart-total" class="text-3xl font-black tracking-tight">$0.00</span>
+        <div class="p-4 bg-[var(--win-gray)] border-t-2 border-[var(--win-light)]">
+            <div class="flex justify-between items-center mb-4 px-2">
+                <span class="text-xl font-bold">Files Selected:</span>
+                <span id="cart-total" class="text-2xl font-bold text-[var(--win-blue)]">$0.00</span>
             </div>
-            <button onclick="checkout()" class="brutal-btn w-full py-4 text-lg flex items-center justify-center gap-3 hover:bg-green-400 hover:text-black">
-                Checkout <i class="fab fa-whatsapp text-2xl"></i>
+            <button onclick="checkout()" class="retro-btn w-full py-3 text-xl flex items-center justify-center gap-2 hover:bg-[var(--win-blue)] hover:text-white">
+                Execute Order <i class="fab fa-whatsapp"></i>
             </button>
             
-            <div class="wc-brand-footer" style="padding-bottom: 0; margin-top: 20px; border-top: 2px dashed #ccc; background: transparent; padding-top: 20px;">
+            <div class="wc-brand-footer" style="padding-bottom: 0; margin-top: 15px; border-top: 1px dotted #000; background: transparent;">
                 <a href="https://whatscart-five.vercel.app/" target="_blank" class="wc-brand-link">
                     <span class="wc-brand-text">Powered by</span>
                     <div class="wc-brand-icon"><i class="fas fa-shopping-cart"></i></div>
@@ -344,7 +416,7 @@
         let cart = [];
         let slideIndices = { 1: 0, 2: 0, 3: 0 }; 
 
-        // 1. GLOBAL PRELOADER (FIX FOR SLOW IMAGES)
+        // 1. GLOBAL PRELOADER
         function preloadImages() {
             products.forEach(p => {
                 p.images.forEach(url => {
@@ -360,7 +432,6 @@
             nav.style.left = nav.style.left === '0px' ? '-100%' : '0px';
         }
 
-        // 2. SMART SLIDESHOW (FIX FOR BLANK SPACE)
         function changeSlide(pid, dir) {
             const product = products.find(p => p.id === pid);
             const nextIndex = (slideIndices[pid] + dir + product.images.length) % product.images.length;
@@ -370,13 +441,12 @@
             const tempImg = new Image();
             tempImg.src = product.images[nextIndex];
             
-            // Only swap when ready to prevent blank gap
             tempImg.onload = () => {
                 img.style.opacity = 0;
                 setTimeout(() => {
                     img.src = tempImg.src;
                     img.style.opacity = 1;
-                }, 100);
+                }, 50);
             };
         }
 
@@ -419,29 +489,26 @@
             if (cart.length === 0) {
                 cartItems.innerHTML = `
                     <div class="flex flex-col items-center justify-center h-full text-gray-400">
-                        <i class="fas fa-ghost text-6xl mb-4"></i>
-                        <p class="font-bold uppercase">It's empty here</p>
+                        <i class="fas fa-folder-open text-6xl mb-4"></i>
+                        <p class="text-xl">Folder is Empty</p>
                     </div>`;
             } else {
-                // FIXED CART LAYOUT: Removed overlapping
                 cartItems.innerHTML = cart.map(item => `
-                    <div class="flex items-center gap-4 bg-white p-4 border-2 border-black shadow-[4px_4px_0px_0px_#eee] relative">
-                        <div class="w-20 h-20 bg-gray-100 border border-black flex items-center justify-center shrink-0">
-                            <img src="${item.thumb}" class="w-full h-full object-contain p-2">
+                    <div class="flex items-center gap-3 bg-[var(--win-gray)] p-2 border-2 border-[var(--win-light)] relative retro-bevel">
+                        <div class="w-16 h-16 bg-white retro-inset flex items-center justify-center">
+                            <img src="${item.thumb}" class="w-full h-full object-contain p-1">
                         </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex justify-between items-start mb-2">
-                                <h4 class="font-black text-sm uppercase leading-tight pr-6 truncate">${item.name}</h4>
-                                <button onclick="removeFromCart(${item.id})" class="text-gray-400 hover:text-red-600 transition absolute top-2 right-2">
-                                    <i class="fas fa-times text-lg"></i>
-                                </button>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <h4 class="font-bold text-lg leading-tight truncate w-32">${item.name}</h4>
+                                <button onclick="removeFromCart(${item.id})" class="text-red-600 hover:text-red-800 font-bold px-2">X</button>
                             </div>
-                            <p class="text-sm font-bold text-blue-600 mb-3">$${item.price.toLocaleString()}</p>
+                            <p class="text-lg text-[var(--win-blue)] mb-1">$${item.price.toLocaleString()}</p>
                             
-                            <div class="flex items-center gap-3">
-                                <button onclick="updateQty(${item.id}, -1)" class="qty-btn"><i class="fas fa-minus"></i></button>
-                                <span class="text-base font-bold w-6 text-center">${item.qty}</span>
-                                <button onclick="updateQty(${item.id}, 1)" class="qty-btn"><i class="fas fa-plus"></i></button>
+                            <div class="flex items-center gap-2">
+                                <button onclick="updateQty(${item.id}, -1)" class="qty-btn">-</button>
+                                <span class="text-xl font-bold w-6 text-center bg-white border border-gray-500">${item.qty}</span>
+                                <button onclick="updateQty(${item.id}, 1)" class="qty-btn">+</button>
                             </div>
                         </div>
                     </div>
