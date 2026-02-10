@@ -16,12 +16,12 @@
     <style>
         /* --- 1. ZEN THEME VARIABLES --- */
         :root {
-            --bg-color: #F9F8F6; /* Soft Cream */
+            --bg-color: #F9F8F6;
             --card-bg: #FFFFFF;
             --text-dark: #2D3436;
             --text-soft: #636E72;
-            --accent-sage: #8DA399; /* Sage Green */
-            --accent-clay: #C08552; /* Warm Clay */
+            --accent-sage: #8DA399;
+            --accent-clay: #C08552;
             --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.08);
         }
 
@@ -36,7 +36,7 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* --- 2. ORGANIC SHAPES --- */
+        /* --- 2. ORGANIC BACKGROUND --- */
         .organic-blob {
             position: absolute;
             background: linear-gradient(135deg, #E8E6E1 0%, #F0EFE9 100%);
@@ -52,24 +52,19 @@
             100% { transform: scale(1.05) rotate(5deg); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
         }
 
-        /* --- 3. HONEY CART (ZEN EDITION) --- */
+        /* --- 3. HONEY CART (ZEN) --- */
         .honey-cart-zen {
             position: relative;
             width: 44px; height: 44px;
-            /* Sage Gradient */
             background: linear-gradient(135deg, #8DA399, #6B8E80);
-            border-radius: 14px; /* Squircle */
+            border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 15px rgba(107, 142, 128, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer; color: white;
             border: 1px solid rgba(255,255,255,0.2);
         }
-
-        .honey-cart-zen:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(107, 142, 128, 0.4);
-        }
+        .honey-cart-zen:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(107, 142, 128, 0.4); }
 
         .cart-badge {
             position: absolute; top: -5px; right: -5px;
@@ -82,10 +77,7 @@
         }
         .cart-badge.visible { opacity: 1; transform: scale(1); }
         .cart-pulse { animation: softPop 0.4s ease-in-out; }
-        
-        @keyframes softPop {
-            0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); }
-        }
+        @keyframes softPop { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
         /* --- 4. PRODUCT CARDS --- */
         .product-card {
@@ -97,20 +89,19 @@
             border: 1px solid rgba(0,0,0,0.02);
             display: flex; flex-direction: column; justify-content: space-between;
         }
-        
         .product-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 50px -10px rgba(0,0,0,0.1);
         }
 
         .product-image-container {
+            /* Adjusted Mobile Height for Single Column */
             height: 220px;
             display: flex; align-items: center; justify-content: center;
             position: relative; z-index: 10;
             margin-bottom: 1rem;
             background: radial-gradient(circle, #F2F0EB 0%, transparent 70%);
         }
-        
         @media (min-width: 768px) {
             .product-image-container { height: 280px; }
         }
@@ -120,12 +111,12 @@
             transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
         }
-        
         .product-card:hover .product-img {
             transform: scale(1.1) translateY(-10px);
             filter: drop-shadow(0 20px 25px rgba(0,0,0,0.15));
         }
 
+        /* Controls */
         .slide-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: white; color: var(--text-dark);
@@ -141,8 +132,9 @@
         /* --- 5. BUTTONS --- */
         .btn-zen {
             background: var(--text-dark); color: #fff;
-            padding: 10px 24px; border-radius: 30px; font-size: 13px;
+            padding: 12px 24px; border-radius: 30px; font-size: 14px;
             letter-spacing: 0.5px; font-weight: 400; transition: all 0.3s ease;
+            width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         .btn-zen:hover {
             background: var(--accent-sage);
@@ -158,7 +150,6 @@
         }
         .cart-open { transform: translateX(0%); }
         .cart-closed { transform: translateX(100%); }
-        
         .qty-btn {
             width: 24px; height: 24px; border-radius: 50%;
             background: #F0EFE9; color: var(--text-dark);
@@ -181,7 +172,29 @@
             color: #fff; font-size: 10px; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2);
         }
 
-        /* --- 8. TOAST --- */
+        /* --- 8. RESPONSIVE GRID CONFIGURATION --- */
+        @media (max-width: 768px) {
+            .mobile-hide { display: none; }
+            .mobile-show { display: block; }
+            #hero h1 { font-size: 3rem; line-height: 1.1; }
+            
+            /* FORCE 1 COLUMN ON MOBILE */
+            .responsive-grid { 
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important; 
+            }
+            .product-card { padding: 1.5rem; }
+            
+            /* Ensure controls are visible on mobile touch */
+            .slide-btn { opacity: 1; width: 40px; height: 40px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        }
+        @media (min-width: 769px) {
+            .mobile-show { display: none; }
+            .mobile-hide { display: flex; }
+            .responsive-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+
+        /* --- 9. TOAST --- */
         #toast {
             position: fixed; top: 100px; left: 50%; transform: translateX(-50%) translateY(-50px);
             background: #fff; color: var(--text-dark);
@@ -191,19 +204,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-left: 4px solid var(--accent-sage);
         }
         #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-        @media (max-width: 768px) {
-            .mobile-hide { display: none; }
-            .mobile-show { display: block; }
-            #hero h1 { font-size: 3rem; line-height: 1.1; }
-            .responsive-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; }
-            .product-card { padding: 1rem; }
-        }
-        @media (min-width: 769px) {
-            .mobile-show { display: none; }
-            .mobile-hide { display: flex; }
-            .responsive-grid { grid-template-columns: repeat(3, 1fr) !important; }
-        }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
@@ -265,12 +265,12 @@
                     <img id="img-1" src="images/app1 (1).png" alt="Luno Tech" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=LUNO'">
                     <button class="slide-btn next-btn" onclick="changeSlide(1, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-2">
+                <div class="mt-4">
                     <p class="text-xs text-[var(--accent-sage)] font-bold uppercase tracking-widest mb-2">Concept</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">Luno Tech V1</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Organic interface design.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
-                        <span class="text-lg font-medium text-gray-800">$4,500</span>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2 serif-font">Luno Tech V1</h3>
+                    <p class="text-gray-400 text-sm mb-6 h-10 line-clamp-2">Organic interface design for seamless interaction.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <span class="text-xl font-medium text-gray-800">$4,500</span>
                         <button onclick="addToCart(1)" class="btn-zen w-full md:w-auto">
                             Add to Bag
                         </button>
@@ -284,12 +284,12 @@
                     <img id="img-2" src="images/i17.png" alt="iPhone" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=PHONE'">
                     <button class="slide-btn next-btn" onclick="changeSlide(2, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-2">
+                <div class="mt-4">
                     <p class="text-xs text-[var(--accent-clay)] font-bold uppercase tracking-widest mb-2">Mobile</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">iPhone 17 Pro</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Natural titanium finish.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
-                        <span class="text-lg font-medium text-gray-800">$1,199</span>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2 serif-font">iPhone 17 Pro</h3>
+                    <p class="text-gray-400 text-sm mb-6 h-10 line-clamp-2">Natural titanium finish, inspired by earth elements.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <span class="text-xl font-medium text-gray-800">$1,199</span>
                         <button onclick="addToCart(2)" class="btn-zen w-full md:w-auto">
                             Add to Bag
                         </button>
@@ -303,12 +303,12 @@
                     <img id="img-3" src="images/ap1.png" alt="AirPods" class="product-img" onerror="this.src='https://via.placeholder.com/400x400/eee/999?text=AUDIO'">
                     <button class="slide-btn next-btn" onclick="changeSlide(3, 1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="mt-2">
+                <div class="mt-4">
                     <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">Audio</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-1 serif-font">AirPods Max 2</h3>
-                    <p class="text-gray-400 text-sm mb-4 h-10 line-clamp-2">Immersive soundscapes.</p>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
-                        <span class="text-lg font-medium text-gray-800">$549</span>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2 serif-font">AirPods Max 2</h3>
+                    <p class="text-gray-400 text-sm mb-6 h-10 line-clamp-2">Immersive soundscapes for deep focus and relaxation.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <span class="text-xl font-medium text-gray-800">$549</span>
                         <button onclick="addToCart(3)" class="btn-zen w-full md:w-auto">
                             Add to Bag
                         </button>
